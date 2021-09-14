@@ -120,7 +120,7 @@ ppp_maryland_loans %>%
 ```
 ### Task 10: Examine forgiveness_date and forgiveness_amount together
 **Task** Run the following codeblock to group by forgiveness_date and forgiveness_amount, count the number of loans, then sort from highest to lowest on count and filter to only show NA values. How many loans are there where forgiveness_date and forgiveness_amount is NA? Is it the same as the number for forgiveness_amount and forgiveness_amount run separately in the codeblocks above? What can you conclude from Answer below.
-**Answer**:
+**Answer**: There are 135073 loans where the forgiveness_date and forgiveness_amount is NA. It is the same amount as the number for forgiveness_amount and forgiveness_date ran separately. 
 ```{r}
 ppp_maryland_loans %>%
   group_by(forgiveness_amount, forgiveness_date) %>%
