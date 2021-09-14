@@ -206,15 +206,15 @@ library(janitor)
 
 ### Task 3: Load Arnold, Maryland demonstration data
 **Task** Run the following codeblock to load a demonstration slice of the data for Arnold, Maryland. How many rows are in this demonstration data set?
-**Answer**
+**Answer** There are 6 rows. 
 
 ```{r}
 arnold_md_loans <- read_rds("arnold_md_loans.rmd")
 ```
 
 ### Task 4: Examine the data with glimpse
-**Task** Run the following codeblock to glimpse the data.  What data type is the "amount" field? Answer below.
-**Answer**
+**Task** Run the following codeblock to glimpse the data.  What data type is the "amount" field? Answer below. 
+**Answer** The "amount" field is a <chr> or character data type.
 ```{r}
 glimpse(arnold_md_loans)
 ```
