@@ -231,7 +231,7 @@ arnold_md_loans
 
 ### Task 6: Use clean_names()
 **Task** Run the following codeblock to use the clean_names() function from janitor to standardize column names. How does the function change the name of the column "1_id"? Answer below.
-**Answer**
+**Answer** The function changes the name of the column "1_id" to "x1_id".
 
 
 ```{r}
@@ -261,7 +261,7 @@ cleaned_arnold_md_loans
 
 ### Task 8: Try summarizing the amount column
 **Task** Run the following codeblock to attempt to add up the amount of all loans. What does the error say when you run this code? What do you think it means? Answer below.
-**Answer**
+**Answer** The error states: "Problem with `summarise()` column `total_amount`. ℹ `total_amount = sum(amount)`. x invalid 'type' (character) of argument." I think that this means the "amount" column has an incorrect data type.  
 
 ```{r}
 # cleaning function
@@ -275,7 +275,7 @@ total_arnold_md_loans
 ```
 ### Task 9: Change data type for amount
 **Task** Run the following codeblock to attempt to change the datatype for the amount field to a number. What is the new data type (three letter code) for amount? Answer below.
-**Answer**
+**Answer** The new data type is <dbl>.
 
 ```{r}
 # cleaning function
@@ -291,7 +291,7 @@ cleaned_arnold_md_loans
 ```
 ### Task 10: Try again to summarize the amount column
 **Task** Run the following codeblock to add up the amount of all loans in this data.  What is the total? Answer below.
-**Answer**
+**Answer** The amount of all loans is 2033179.
 ```{r}
 # cleaning function
 total_arnold_md_loans <- cleaned_arnold_md_loans %>%
@@ -305,7 +305,7 @@ total_arnold_md_loans
 
 ### Task 11: Check for duplicate rows
 **Task** Run the following codeblock to check for duplicate rows using get_dupes().  How many are there? What is the business name? Answer below.
-**Answer**
+**Answer** There are two rows with the same information. They are listed as Stuart Jones LLC. 
 
 ```{r}
 cleaned_arnold_md_loans %>%
