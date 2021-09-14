@@ -314,7 +314,7 @@ cleaned_arnold_md_loans %>%
 
 ### Task 12: Check for duplicate rows
 **Task** Run the following codeblock to use distinct() to get rid of duplicate rows. How many rows does the new dataframe have? Answer below.
-**Answer**
+**Answer** The new dataframe has 5 rows.
 ```{r}
 # cleaning function
 cleaned_arnold_md_loans <- arnold_md_loans %>%
@@ -331,7 +331,7 @@ cleaned_arnold_md_loans
 
 ### Task 13: Clean up ZIP code
 **Task** Run the following codeblock to use str_sub() to convert the ZIP codes that have nine digits to five digits, standardizing the field.
-**Answer**
+
 
 ```{r}
 # cleaning function
@@ -350,7 +350,7 @@ cleaned_arnold_md_loans
 
 ### Task 14: Clean up city field
 **Task** Run the following codeblock to use str_tot_title() to standarize capitalization in the "city" field. How many mispellings of Arnold remain after running this code? Answer below.
-
+**Answer**: There are two mispellings of Arnold that remain after runnning this code. 
 ```{r}
 # cleaning function
 cleaned_arnold_md_loans <- arnold_md_loans %>%
@@ -370,7 +370,7 @@ cleaned_arnold_md_loans
 
 ### Task 15: Clean up city field more with case_when()
 **Task** Run the following codeblock to use case_when() to fix misspellings of Arnold in the "city" field. How many mispellings of Arnold remain after running this code? Answer below.
-**Answer**
+**Answer** There is one mispelling of Arnold that remains after running this code. 
 
 ```{r}
 # cleaning function
@@ -394,7 +394,7 @@ cleaned_arnold_md_loans
 
 ### Task 16: Clean up city field more with case_when()
 **Task** Run the following codeblock to use case_when() to fix misspellings of Arnold in the "city" field using both the exact match method and the str_detect() method. How many mispellings of Arnold remain after running this code? Answer below.
-**Answer**
+**Answer** There are no mispellings of Arnold that remain after running this code. 
 ```{r}
 # cleaning function
 cleaned_arnold_md_loans <- arnold_md_loans %>%
