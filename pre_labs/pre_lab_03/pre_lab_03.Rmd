@@ -36,7 +36,7 @@ library(tidyverse)
 
 ### Task 2: Load data
 **Task** Load the PPP loan dataset by running the following code. We'll use the guess_max() function as an argument to use the first 10 rows to set the data type. What does the first line of the red Warning message that prints out when you load the data say? Answer below.
-**Answer**
+**Answer** The red warning message says: one or more parsing issues, see 'problems()' for details.
 
 ```{r}
 ppp_maryland_loans <- read_csv("ppp_loans_md.csv.zip", guess_max=10)
