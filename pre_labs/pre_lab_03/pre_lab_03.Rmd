@@ -55,10 +55,10 @@ problems(ppp_maryland_loans)
 
 ### Task 4: Reload data
 **Task** Run the following codeblock to reload the data, using every row to set the data types. Does it show any parsing errors when you run? Answer below
-**Answer**
+**Answer** There are no longer any parsing errors.
 
 ```{r}
-ppp_maryland_loans <- read_csv("ppp_loans_md.csv.zip", guess_max=195865)
+ppp_maryland_loans <- read_csv("ppp_loans_md.csv.zip")
 ```
 
 ### Task 5: Examine the data with glimpse
