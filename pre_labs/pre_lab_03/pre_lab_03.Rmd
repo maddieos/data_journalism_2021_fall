@@ -63,7 +63,7 @@ ppp_maryland_loans <- read_csv("ppp_loans_md.csv.zip")
 
 ### Task 5: Examine the data with glimpse
 **Task** Run the following codeblock to glimpse the data.  What data type is the "amount" field?  What data type is the "name" field? What data type is the id column? Answer below.
-**Answer**
+**Answer** The "amount" field is a <dbl> data type. The "name" field is a <chr> data type. The id column is a <dbl> data type.
 ```{r}
 glimpse(ppp_maryland_loans)
 ```
