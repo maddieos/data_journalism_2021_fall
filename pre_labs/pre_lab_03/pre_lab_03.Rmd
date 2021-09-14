@@ -223,7 +223,7 @@ And let's examine the full data set.
 
 ### Task 5: Examine the data table
 **Task** Run the following codeblock to examine the data. Name three problems the book chapter says exist in this data set that could prevent us from answering questions?  Answer below
-**Answer**
+**Answer** The book chapter states that one of the problems is that the column headers are inconsistently styled. Second, the amount column is stored as a character, not a number. Third, there is a fully duplicated row in the data set.
 
 ```{r}
 arnold_md_loans
