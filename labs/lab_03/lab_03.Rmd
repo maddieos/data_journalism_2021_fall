@@ -15,16 +15,16 @@ knitr::opts_chunk$set(echo = TRUE)
 options(scipen=999)
 
 # Load the tidyverse here
-
+library(tidyverse)
 # Load janitor here
-
+library(janitor)
 ```
 
 ## Load data
 ```{r}
 # Write code to load the WV slice of the ppp loan data here and call it wv_ppp_loans.
 # The data is called lab_03.rds, and is in the same folder as lab_03.Rmd (this data notebook)
-
+wv_ppp_loans <- read_rds ("lab_03.rds")
 
 ```
 
