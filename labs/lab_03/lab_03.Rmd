@@ -45,6 +45,10 @@ wv_ppp_loans %>%
     city == "S Charleston" ~ "South Charleston",
     city == "So Charleston" ~ "South Charleston",
     str_detect(city, "Albans|albans") ~ "Saint Albans",
+    city == "Elkveiw" ~ "Elkview",
+    city == "Crosslanes" ~ "Cross Lanes",
+    city == "Charelston" ~ "Charleston",
+    city == "Balle" ~ "Belle",
     TRUE ~ city
    ))%>%
   
