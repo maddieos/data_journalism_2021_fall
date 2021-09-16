@@ -117,6 +117,8 @@ A3:
 
 # Hint
 # First, create a dataframe that only has loans to those five companies
+wv_ppp_loans %>%
+  
 # Second, use that newly created dataframe to calculate total loan amount and percentage forgiven for those companies
 
 ```
