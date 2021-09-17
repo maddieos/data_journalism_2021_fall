@@ -118,7 +118,8 @@ A3: The businesses are DM Motor, Inc., Dutch Miller Charleston, Inc., Dutch Mill
 # Hint
 # First, create a dataframe that only has loans to those five companies
 wv_ppp_loans %>%
-  filter(name == "DM MOTOR, INC")
+  filter(name == "DM MOTOR, INC" | name == "DUTCH MILLER OF CHARLESTON, INC" | name == "DUTCH MILLER OF CHARLOTTE, INC" | name == "DUTCH MILLER SUBARU, INC" | name == "DUTCH MILLER CHEVROLET, INC.")
+  
   
 # Second, use that newly created dataframe to calculate total loan amount and percentage forgiven for those companies
 
