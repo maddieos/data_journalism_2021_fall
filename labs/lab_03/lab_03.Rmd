@@ -111,7 +111,7 @@ Some hints to help you answer this question:
 * When you examine the disclosure forms, there may be lots of stock sales and retirement accounts mixed in.  Ignore those. In the table in the disclosure forms, look for "Partnership" or "C-Corp" in the column named "Income Type"
 * This is a link to details on passage of the [CARES ACT](https://www.congress.gov/bill/116th-congress/house-bill/748). You can find a link to how the House voted by clicking on a link from [this page](https://www.congress.gov/bill/116th-congress/house-bill/748/actions).
 
-A3: The businesses are DM Motor, Inc., Dutch Miller Charleston, Inc., Dutch Miller Chevrolet, Inc., Dutch Miller Subaru, Inc.,and Dutch Miller of Charlotte, Inc. The businesses are car dealerships. In total, the five businesses received 3105300. 
+A3: The businesses are DM Motor, Inc., Dutch Miller Charleston, Inc., Dutch Miller Chevrolet, Inc., Dutch Miller Subaru, Inc.,and Dutch Miller of Charlotte, Inc. The businesses are car dealerships. In total, the five businesses received 3105300. Originally, Carol Miller, the U.S. House member, voted against the legislation. 
 
 ```{r}
 
