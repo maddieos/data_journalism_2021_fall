@@ -29,7 +29,7 @@ library(lubridate)
 Let's say that we have county population estimates for three different years - 2010, 2015 and 2020 - in three different files. They have the same record layout and the same number of counties.
 
 **Task** Load the three CSV population estimate files. Do they have the same column structure?
-**Answer**
+**Answer** Yes, all three CSV population estimate files have the same column structure.
 
 ```{r}
 popestimate_2010 <- read_csv("data/popestimate_2010.csv")
@@ -57,7 +57,7 @@ View(estimates)
 
 ### Task 4: Loading data
 **Task** Load the Maryland PPP data and a CSV file with NAICS codes. How many rows are in maryland_ppp?
-**Answer**
+**Answer** There are 1057 rows in maryland_ppp.
 
 ```{r}
 maryland_ppp <- read_rds("pre_lab_04.rds")
