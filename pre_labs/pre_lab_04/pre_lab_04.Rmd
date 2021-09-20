@@ -69,7 +69,7 @@ naics_codes <- read_csv('data/naics_codes.csv')
 
 ### Task 5: Join Them
 **Task** Run the following code to join the PPP data to the NAICS codes using the common column naics_code as the key. How many rows are there now?
-**Answer**
+**Answer** There are now 195869 rows. 
 
 ```{r}
 # with nrow included to match row total
@@ -99,7 +99,7 @@ maryland_zcta <- read_csv('data/maryland_zcta.csv')
 
 ### Task 9: Join ZCTA to PPP Data
 **Task** Join the ZCTA data to the our PPP & NAICS data. What's the error message you get? What do you think it means?
-**Answer**
+**Answer** The error message is "Error: Can't join on `x$zip` x `y$zip` because of incompatible types. ℹ `x$zip` is of type <character>>. ℹ `y$zip` is of type <double>>. " I think that error message means that the ZCTA data does not have the same datatype as the PPP & NAICS data.
 
 ```{r}
 # join on zip - but there's a problem
@@ -114,7 +114,7 @@ maryland_zcta <- maryland_zcta %>% mutate(across(ZCTA5N, as.character))
 
 ### Task 11: Join ZCTA to PPP Data and Check
 **Task** Join the ZCTA data to the our PPP & NAICS data. Examine the columns in the new dataframe - does every row have demographic data? HINT: Use the >> character to browse columns
-**Answer**
+**Answer** Not every row has demographic data.
 
 ```{r}
 maryland_ppp_with_naics_and_demographics <- maryland_ppp_with_naics %>% left_join(maryland_zcta, by=c("zip"="ZCTA5N"))
@@ -123,7 +123,7 @@ View(maryland_ppp_with_naics_and_demographics)
 
 ### Task 12: Make a Zip5 Column, Join ZCTA to PPP Data and Check Again
 **Task** Make a zip5 column and join again. Examine the new dataframe - now does every row have demographic data?
-**Answer**
+**Answer**Every row has demographic data.
 
 ```{r}
 # make a zip5 column and redo the join
@@ -134,7 +134,7 @@ maryland_ppp_with_naics_and_demographics <- maryland_ppp_with_naics %>% left_joi
 ### Task 13: Asking Demographic Questions
 **Task** Find the number of PPP loans that went to ZCTAs with more than 50% non-Hispanic Black population, and calculate the average and median amounts for those loans. Put your answers below.
 **Answer**
-
+The average amount for those loans was 53836.46. The median amount for those loans was 20000.
 ```{r}
 # zcta with > 50% non-Hispanic Black population
 maryland_ppp_with_naics_and_demographics %>%
@@ -149,7 +149,7 @@ maryland_ppp_with_naics_and_demographics %>%
 ### Task 14: Asking Demographic Questions
 **Task** Find the number of PPP loans that went to ZCTAs with more than 50% non-Hispanic white population, and calculate the average and median amounts for those loans. Put your answers below.
 **Answer**
-
+The average amount for those loans was 88140.24. The median amount for those loans was 20833.
 ```{r}
 # zcta with > 50% non-Hispanic white population
 maryland_ppp_with_naics_and_demographics %>%
@@ -163,7 +163,7 @@ maryland_ppp_with_naics_and_demographics %>%
 ### Task 15: Asking Demographic Questions
 **Task** Find the number of PPP loans that went to ZCTAs with more than 50% non-Hispanic Black population, grouped by rural or urban status, and calculate the average and median amounts for those loans. Put your answers below.
 **Answer**
-
+Within rural status, the average amount for those loans was 44328.87. The median amount was 19621. Within the urban status, the average amount for those loans was 53868.53 and the median amount was 20000.
 ```{r}
 # zcta with > 50% non-Hispanic Black population grouped by rural/urban
 maryland_ppp_with_naics_and_demographics %>%
@@ -178,7 +178,7 @@ maryland_ppp_with_naics_and_demographics %>%
 ### Task 16: Asking Demographic Questions
 **Task** Find the number of PPP loans that went to ZCTAs with more than 50% non-Hispanic white population, grouped by rural or urban status, and calculate the average and median amounts for those loans. Put your answers below.
 **Answer**
-
+In the rural status group, the average loan was 73694.14 and the median amount was 20833. In the urban status group, the average loan amount was 90911.14 and the median amount was 20833.
 ```{r}
 # zcta with > 50% non-Hispanic white population grouped by rural/urban
 maryland_ppp_with_naics_and_demographics %>%
