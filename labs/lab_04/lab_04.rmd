@@ -111,26 +111,42 @@ maryland_ppp_with_naics_and_demographics %>%
 ```
 
 **Q3** Which Maryland zip code with at least 20 percent non-Hispanic Asian population had the largest sum of PPP loans? Also show the number (count) of loans.
-**A3** [write your answer here]
+**A3** 20850 has at least 20 percent non-Hispanic Asian population with the largest sum of PPP loans. 
 
 ```{r}
 # Write the code to produce your answer here
 maryland_ppp_with_naics_and_demographics %>%
   filter(PNHA > 20) %>%
+  group_by(zip5)%>%
+  summarize(
+    total_amount = sum(amount)
+    ) %>%
+  arrange(desc(total_amount))
  
 
 ```
 
 **Q4** Which Maryland zip code had the largest sum of loans where the reported race of the applicant was "Asian", and what is the percentage of non-Hispanic Asian population in that zip code? Also show the number (count) of loans.
-**A4** [write your answer here]
+**A4** 20850 is the Maryland zip code with the largest sum of loans when the applicant was Asian. The percentage of the non-Hispanic Asian popilation in 20850 is 23.5 percent. 
 
 ```{r}
 # Write the code to produce your answer here
+maryland_ppp_with_naics_and_demographics %>%
+  filter(race == "Asian")%>%
+  group_by(zip5)%>%
+  summarize(
+    summ= n()
+  )%>%
+arrange(desc(summ))
 
+maryland_ppp_with_naics_and_demographics %>%
+  filter(zip5 == "20850")
+
+  
 ```
 
 **Q5** What might explain why 20850 has a significant Asian population (23.5%) and only 240 of the 3,186 loans (7.5%) are to Asian applicants?
-**A5** [write your answer here]
+**A5** [write your answer here] The fact that a lot of loan applicants did not report their race in the application may explain why so little of loans belonged to Asian applicants. 
 
 
 **Q6** Find any Maryland zip codes that have loans where the PPP data lists the applicants as being Asian but where the zip code does not appear to have Asian population in the ZCTA data? What do you think is going on here?
