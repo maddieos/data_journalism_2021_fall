@@ -127,7 +127,7 @@ maryland_ppp_with_naics_and_demographics %>%
 ```
 
 **Q4** Which Maryland zip code had the largest sum of loans where the reported race of the applicant was "Asian", and what is the percentage of non-Hispanic Asian population in that zip code? Also show the number (count) of loans.
-**A4** 20850 is the Maryland zip code with the largest sum of loans when the applicant was Asian. The percentage of the non-Hispanic Asian popilation in 20850 is 23.5 percent. 
+**A4** 20850 is the Maryland zip code with the largest sum of loans when the applicant was Asian. The percentage of the non-Hispanic Asian population in 20850 is 23.5 percent. 
 
 ```{r}
 # Write the code to produce your answer here
@@ -150,17 +150,28 @@ maryland_ppp_with_naics_and_demographics %>%
 
 
 **Q6** Find any Maryland zip codes that have loans where the PPP data lists the applicants as being Asian but where the zip code does not appear to have Asian population in the ZCTA data? What do you think is going on here?
-**A6** [write your answer here]
+**A6** 
 
 ```{r}
 # Write the code to produce your answer here
+maryland_ppp_with_naics_and_demographics %>%
+  filter(race== "Asian") %>%
+  group_by(zip5) %>%
+  filter(PNHA == 0)
 
 ```
 
 **Q7** How many industries have exactly one loan in the data (hint: you can filter _after_ using `summarise` on any totals you create). From a newsworthiness standpoint, which of these is most worthy of further exploration, and why?
-**A7** [write your answer here]
+**A7** From a newsworthiness standpoint, the executive and legislative offices seem to be most worthy of further exploration, because it seems strange that these offices would only be receiving one loan. 
 
 ```{r}
 # Write the code to produce your answer here
+maryland_ppp_with_naics_and_demographics %>%
+ group_by(title)%>%
+ summarize(
+    summ= n()
+ )%>%
+filter(summ == 1) %>%
+arrange(desc(summ))
 
 ```
