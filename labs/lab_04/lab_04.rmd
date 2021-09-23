@@ -81,15 +81,20 @@ Now we can join the PPP data to the ZCTA data:
 
 ```{r}
 # add code here to accomplish the task
+maryland_ppp_with_naics_and_demographics <- maryland_ppp_with_naics %>% left_join(maryland_zcta, by=c("zip"="ZCTA5N"))
 ```
 
 ## Answer questions
 
 **Q1** What are the top 5 industries (using the NAICS title) with the most PPP applications in Maryland?
-**A1** [write your answer here]
+**A1** The top 5 industries with the most PPP applications in Maryland are taxi services, beauty salons, full-service resturants, offices of real estate agents and brokers, and all other personal services. 
 
 ```{r}
 # Write the code to produce your answer here
+maryland_ppp_with_naics_and_demographics %>%
+  group_by(title)%>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
 ```
 
 **Q2** What are the top industries (using the NAICS title) with the most PPP applications in Maryland where the loan amount is more than $150,000?
@@ -105,6 +110,12 @@ Now we can join the PPP data to the ZCTA data:
 
 ```{r}
 # Write the code to produce your answer here
+maryland_ppp_with_naics_and_demographics %>%
+  filter(PNHW > 20) %>%
+  summarize(
+    count = n(),
+    avgamount = mean(amount),
+    medamount = median(amount))
 
 ```
 
