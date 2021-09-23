@@ -59,6 +59,10 @@ Next join the two and then create a 5-character `zip5` column that we can use to
 
 ```{r}
 # add code here to accomplish the task
+maryland_ppp_with_naics <- maryland_ppp %>% left_join(naics_codes) 
+
+maryland_ppp_with_naics <- maryland_ppp_with_naics %>% mutate(zip5 = str_sub(zip, 1, 5)) 
+  
 ```
 
 Let's add the Zip Code Tabulation Area dataset. You'll need to make the `ZCTA5N` column a character column, not a numeric one:
@@ -67,6 +71,8 @@ Let's add the Zip Code Tabulation Area dataset. You'll need to make the `ZCTA5N`
 
 ```{r}
 # add code here to accomplish the task
+maryland_zcta <- read_csv("data/maryland_zcta.csv")
+maryland_zcta <- maryland_zcta %>% mutate(across(ZCTA5N, as.character))
 ```
 
 Now we can join the PPP data to the ZCTA data:
