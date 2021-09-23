@@ -39,6 +39,7 @@ Let's keep working with Maryland loan applications contained in the PPP data.
 
 ```{r}
 # add code here to accomplish the task
+maryland_ppp <- read_rds("lab_04.rds")
 ```
 
 To answer the questions below, you'll need to join both the NAICS code data and the ZCTA demographic data from the book chapter. There's a particular set of steps you'll need to perform to make that work properly.
@@ -48,7 +49,8 @@ First, let's load the NAICS code CSV file we have in the data folder:
 **Task** Read in the naics_codes.csv file and assign it to the variable `naics_codes`.
 
 ```{r}
-# add code here to accomplish the task
+# add code here to accomplish the task\
+naics_codes <- read_csv("data/naics_codes.csv")
 ```
 
 Next join the two and then create a 5-character `zip5` column that we can use to join to the ZCTA data:
