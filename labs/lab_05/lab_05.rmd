@@ -110,11 +110,31 @@ Requirement: you MUST export a dataframe of PPP loans from R Studio at some poin
 Guidance: there are a lot of steps you'll need to take to answer this question. You may or may not find it helpful to write out in English what you plan to do step-by-step before you start writing code.   
 
 **A3.**
-
+Martinsburg has the highest number of loans. Full-Service Restaurants is the industry title with the most loans. 
 ```{r}
-zip_25401_loan_sample_clean %>%
-  filter(project_county_name =="BERKELEY")
+Berkeley_loans <- lab_05 %>%
+  filter(project_county_name == "BERKELEY")
+  write_csv(Berkeley_loans, "data/Berkeley_loans.csv")
   
+Berkeley_loans_clean <- read_csv("data/Berkeley_loans-csv.csv")
+
+Berkeley_loans_clean_naics_code <-Berkeley_loans_clean %>% left_join(naics_codes) 
+  
+Berkeley_loans_clean_naics_code %>%
+  group_by(city)%>%
+ summarise(
+    count= n()
+  ) %>%
+  arrange(desc(count))
+
+Berkeley_loans_clean_naics_code %>%
+  filter(city=="Martinsburg")%>%
+  group_by(title)%>%
+ summarise(
+    count= n()
+  ) %>%
+  arrange(desc(count))
+
   
   
 ```
