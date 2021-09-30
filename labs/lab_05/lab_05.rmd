@@ -48,7 +48,7 @@ All three data sets are in the data folder.  Write code to load the three in the
 **Task** Create a codeblock below this task, then read the data sets in in and assign them to appropriate variable names. There's a fourth data set you'll use in this lab, too, of selected loans in ZIP Code 25401. But there's no need to load it now.
 
 ```{r}
-lab_05 <- read_csv("data/lab_05.rds")
+lab_05 <- read_rds("data/lab_05.rds")
 naics_codes <- read_csv("data/naics_codes.csv")
 wv_population_county <- read_csv("data/wv_population_county.csv")
 
@@ -74,8 +74,20 @@ Then answer these questions:
 * What are the names of the businesses at that address?
 
 **A1.**
+126 E Burke St has the most loans. There are 6 loans at that street address. The names of the businesses at that address are Drew Holdings LLC, Brix27 LLC, Abraham Ashton, Hub Co-Op LLC, and Ronin Properties LLC. 
 
 ```{r}
+zip_25401_loan_sample_clean <- read_csv("data/zip_25401_loan_sample-csv.csv")
+
+zip_25401_loan_sample_clean %>%
+  group_by(address)%>%
+  summarise(
+    count= n()
+  ) %>%
+  arrange(desc(count))
+
+zip_25401_loan_sample_clean %>%
+  filter(address=="126 E Burke St") 
 
 ```
 
