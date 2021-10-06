@@ -55,8 +55,19 @@ In this notebook, we are reverse engineering five sentences from the story.
 
 ```{r}
 # Put code to reverse engineer sentence here
+#Filter Baltimore City homicides/ create new data frame with only Baltimore City homicides
+#Filter to homicides in 2014
+#Filter "disposition"- "closed without arrest", "open/no arrest"
+#code to find percent 
 
-# Display results of code below this codeblock
+#Filter Baltimore City homicides/ use new data frame with only Baltimore City homicides
+#Filter to homicides in 2018
+#Filter disposition"- "closed without arrest", "open/no arrest"
+#code to find percent
+
+#code to fine percentage point drop
+
+# Display results of code below this code block
 
 ```
 
