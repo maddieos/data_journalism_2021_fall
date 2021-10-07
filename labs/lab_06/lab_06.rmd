@@ -91,13 +91,18 @@ md_international_migration <- md_international_migration %>%
 ```
 
 **Q2** Write a sentence or two that describes the data you produced in A1. Try to convey the most important idea.
-**A2** [write your answer here]
+**A2** In the state of Maryland, 198996 people migrated to the state between July 2010 and July 2019. The Suburban Washington Region recieved the largest percentage of migrants during this time period. 
 
 **Q3** Which region & jurisdiction had the largest percentage change (either negative or positive) for international migration between July 2018 and July 2017? The formula for percentage change is easy to remember: (New-Old)/Old.
-**A3** [write your answer here]
+**A3** Cecil County had the largest percent change for international migration between July 2018 and July 2017.
 
 ```{r}
 # Write the code to produce your answer here
+md_international_migration %>%
+  mutate(
+    percent_change18=(JULY_2018-JULY_2017)/JULY_2017
+  )%>%
+  arrange(desc(percent_change18))
 
 ```
 
