@@ -56,12 +56,21 @@ In this notebook, we are reverse engineering five sentences from the story.
 ```{r}
 # Put code to reverse engineer sentence here
 #Filter Baltimore City homicides/ create new data frame with only Baltimore City homicides
-#Filter to homicides in 2014
+#Filter to reported_date "2014"
 #Filter "disposition"- "closed without arrest", "open/no arrest"
 #code to find percent 
+baltimore_homicide %>%
+  filter(city == "Baltimore")%>%
+  group_by(disposition)%>%
+   summarise(
+    count= n()
+  ) %>%
+  arrange(desc(count))
+ 
+
 
 #Filter Baltimore City homicides/ use new data frame with only Baltimore City homicides
-#Filter to homicides in 2018
+#Filter to reported_date "2018"
 #Filter disposition"- "closed without arrest", "open/no arrest"
 #code to find percent
 
