@@ -63,10 +63,12 @@ Add a column for the type of migration ("international") and populate it:
 
 ```{r}
 # Write the code to add the column here
-md_international_migration %>%
+
+md_international_migration <- md_international_migration %>%
   mutate(
     migration_type = "international"
   )
+
 
 ```
 
@@ -77,7 +79,7 @@ md_international_migration %>%
 
 ```{r}
 # Write the code to produce your answer here
-
+md_international_migration %>%
 ```
 
 **Q2** Write a sentence or two that describes the data you produced in A1. Try to convey the most important idea.
