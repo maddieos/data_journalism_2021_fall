@@ -80,8 +80,6 @@ md_international_migration <- md_international_migration %>%
 ```{r}
 # Write the code to produce your answer here
 
-  
-
 md_international_migration <- md_international_migration %>%
   mutate(
     percent_of_total = TOTAL/198996
@@ -107,7 +105,7 @@ md_international_migration %>%
 ```
 
 **Q4** What's your best guess as to why these changes occurred, and in those places in particular?
-**A4** [write your answer here]
+**A4** A possibility for this change is due to the Trump Era immigration laws. The percent change from 2017 to 2018 was -1.27%. The Trump Era immigration laws made it harder for migrants to come into the country, which could be the cause for this decrease in migration.  
 
 
 ## Back to Tabula
@@ -124,6 +122,7 @@ Let's load it into R, and in doing so we'll skip the first two rows and add our 
 
 ```{r}
 # Write the code to load the CSV file here
+domestic_migration <- read_csv("data/tabula-md-statistical-handbook2.csv",skip=2,col_names = c("COUNTY","JULY_2010","JULY_2011","JULY_2012","JULY_2013","JULY_2014","JULY_2015","JULY_2016","JULY_2017","JULY_2018","TOTAL"))
 ```
 
 Add a column for the type of migration ("domestic") and populate it:
@@ -132,24 +131,36 @@ Add a column for the type of migration ("domestic") and populate it:
 
 ```{r}
 # Write the code to add the column here
+domestic_migration <- domestic_migration %>%
+  mutate(
+    migration_type = "domestic"
+  )
 ```
 
 ## Answer questions
 **Q5** Which Maryland individual jurisdiction saw the largest net decrease in domestic migration overall?
-**A5** [write your answer here]
+**A5** Baltimore City saw the largest net decrease in domestic migration overall.
 
 ```{r}
 # Write the code to produce your answer here
-
+domestic_migration <- domestic_migration %>%
+  arrange(TOTAL)
 ```
 
 **Q6** How many regions & jurisdictions had net positive migration for July 2017, July 2018 and July 2019 (not just individually but all three together)?
-**A6** [write your answer here]
+**A6** 18 regions and jurisdictions had net positive migration for July 2017, July 2018, and July 2019.
 
 ```{r}
 # Write the code to produce your answer here
+domestic_migration <- domestic_migration %>%
+  mutate(
+    net_positive = (JULY_2016+JULY_2017+JULY_2018)
+  )%>%
+arrange(desc(net_positive))
 
+domestic_migration %>%
+  filter(net_positive>0)
 ```
 
 **Q7** How would you describe this data? Is there a county or region that stands out, and why?
-**A7** [write your answer here]
+**A7** Frederick County has the largest net positive migration for July 2017, 2018, and 2019. It stands out that most of these counties are on the Eastern Shore, which is a predominately low population area. I wonder why so many people are opting to move to these areas, rather than say Baltimore City, Baltimore County, or near the DC metro area. 
