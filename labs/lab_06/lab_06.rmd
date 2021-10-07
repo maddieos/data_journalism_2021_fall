@@ -54,6 +54,7 @@ Let's load it into R, and in doing so we'll skip the first two rows and add our 
 
 ```{r}
 # Write the code to load the CSV file here
+md_international_migration <- read_csv("data/tabula-md-statistical-handbook.csv",col_names = c("COUNTY","JULY_2010","JULY_2011","JULY_2012","JULY_2013","JULY_2014","JULY_2015","JULY_2016","JULY_2017","JULY_2018"))
 ```
 
 Add a column for the type of migration ("international") and populate it:
@@ -62,6 +63,11 @@ Add a column for the type of migration ("international") and populate it:
 
 ```{r}
 # Write the code to add the column here
+md_international_migration %>%
+  mutate(
+    migration_type = "international"
+  )
+
 ```
 
 ## Answer questions
