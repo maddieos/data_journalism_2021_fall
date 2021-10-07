@@ -54,7 +54,7 @@ Let's load it into R, and in doing so we'll skip the first two rows and add our 
 
 ```{r}
 # Write the code to load the CSV file here
-md_international_migration <- read_csv("data/tabula-md-statistical-handbook.csv",col_names = c("COUNTY","JULY_2010","JULY_2011","JULY_2012","JULY_2013","JULY_2014","JULY_2015","JULY_2016","JULY_2017","JULY_2018"))
+md_international_migration <- read_csv("data/tabula-md-statistical-handbook.csv",skip=2,col_names = c("COUNTY","JULY_2010","JULY_2011","JULY_2012","JULY_2013","JULY_2014","JULY_2015","JULY_2016","JULY_2017","JULY_2018","TOTAL"))
 ```
 
 Add a column for the type of migration ("international") and populate it:
@@ -75,11 +75,19 @@ md_international_migration <- md_international_migration %>%
 ## Answer questions
 
 **Q1** Which region and county/city _below_ the state level accounted for the largest percentage of international migration for the entire time period? You'll need to add and populate a column representing percent of total using `mutate`.
-**A1** [write your answer here]
+**A1** The Suburban Washington Region has the largest percentage of international migration for the entire time period.
 
 ```{r}
 # Write the code to produce your answer here
-md_international_migration %>%
+
+  
+
+md_international_migration <- md_international_migration %>%
+  mutate(
+    percent_of_total = TOTAL/198996
+  ) %>%
+  arrange(desc(percent_of_total))
+
 ```
 
 **Q2** Write a sentence or two that describes the data you produced in A1. Try to convey the most important idea.
