@@ -52,31 +52,42 @@ In this notebook, we are reverse engineering five sentences from the story.
 
 * **Sentence text**: City police made an arrest in 41 percent of homicides in 2014; last year (2018), the rate was just 27 percent, a 14 percentage point drop.
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+After the results of our analysis, the statistic that city police made an arrest in 41 percent of homicides in 2014 is correct. We attempted to analyze the 2018 statistic, only to find that the data frame doesn't include any data from 2018. 
 
 ```{r}
-# Put code to reverse engineer sentence here
-#Filter Baltimore City homicides/ create new data frame with only Baltimore City homicides
-#Filter to reported_date "2014"
-#Filter "disposition"- "closed without arrest", "open/no arrest"
-#code to find percent 
-baltimore_homicide %>%
-  filter(city == "Baltimore")%>%
+#2014
+baltimore_homicide %>% 
+  filter(city == "Baltimore") %>%
+  mutate(reported_date = as.Date(as.character( reported_date), format="%Y%m%d")) %>%
+  filter(reported_date >= as.Date("2014-01-01"), reported_date <= as.Date("2014-12-31")) %>%
   group_by(disposition)%>%
    summarise(
     count= n()
   ) %>%
-  arrange(desc(count))
- 
+  mutate(s = sum(count)) %>%
+  filter(disposition == "Closed by arrest") %>%
+  mutate(c = sum(count)) %>%
+  mutate(percentage = c / s) %>%
+  select(percentage) %>%
+  group_by(percentage) %>%
+  slice(1:1)
 
-
-#Filter Baltimore City homicides/ use new data frame with only Baltimore City homicides
-#Filter to reported_date "2018"
-#Filter disposition"- "closed without arrest", "open/no arrest"
-#code to find percent
-
-#code to fine percentage point drop
-
-# Display results of code below this code block
+#2018
+baltimore_homicide %>% 
+  filter(city == "Baltimore") %>%
+  mutate(reported_date = as.Date(as.character( reported_date), format="%Y%m%d")) %>%
+  filter(reported_date >= as.Date("2018-01-01"), reported_date <= as.Date("2018-12-31")) %>%
+  group_by(disposition)%>%
+   summarise(
+    count= n()
+  ) %>%
+  mutate(s = sum(count)) %>%
+  filter(disposition == "Closed by arrest") %>%
+  mutate(c = sum(count)) %>%
+  mutate(percentage = c / s) %>%
+  select(percentage) %>%
+  group_by(percentage) %>%
+  slice(1:1)
 
 ```
 
