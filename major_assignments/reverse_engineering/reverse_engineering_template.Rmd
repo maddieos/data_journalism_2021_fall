@@ -52,7 +52,7 @@ In this notebook, we are reverse engineering five sentences from the story.
 
 * **Sentence text**: City police made an arrest in 41 percent of homicides in 2014; last year (2017), the rate was just 27 percent, a 14 percentage point drop.
 * **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
-After the results of our analysis, the statistic that city police made an arrest in 41 percent of homicides in 2014 is correct. The statistic that police made an arrest in 27 percent of homicides in 2017 is also correct.  
+After the results of our analysis, the statistic that city police made an arrest in 41 percent of homicides in 2014 is correct. The statistic that police made an arrest in 27 percent of homicides in 2017 is also correct. Lastly, by combining the 2014 homicide percentage and the 2017 percentage data frames and then subtracting the two percentages from each other, we confirmed that it was a 14 percentage point drop between 2014 and 2017.
 
 ```{r}
 #2014
@@ -66,7 +66,7 @@ percent_2014 <- baltimore_homicide %>%
   ) %>%
   mutate(total_homicides = sum(count)) %>%
   filter(disposition == "Closed by arrest") %>%
-  mutate(percentage = count / total_homicides)
+  mutate(percentage2014 = count / total_homicides)
 
 #2017
 percent_2017 <- baltimore_homicide %>% 
@@ -75,14 +75,15 @@ percent_2017 <- baltimore_homicide %>%
   filter(reported_date >= as.Date("2017-01-01"), reported_date <= as.Date("2017-12-31")) %>%
   group_by(disposition)%>%
    summarise(
-    count_2017= n()
+    count= n()
   ) %>%
   mutate(total_homicides = sum(count)) %>%
   filter(disposition == "Closed by arrest") %>%
-  mutate(percentage = count / total_homicides) 
+  mutate(percentage2017 = count / total_homicides) 
   
 #difference
-total_2014_2017 <- bind_cols(percent_2014,percent_2017)
+total_2014_2017 <- bind_cols(percent_2014,percent_2017)%>%
+  mutate(percentage2017-percentage2014)
 
 ```
 
