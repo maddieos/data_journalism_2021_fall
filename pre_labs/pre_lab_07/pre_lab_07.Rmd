@@ -40,7 +40,7 @@ Let's suppose we can't find a table like that for download, but we do see a vers
 
 ### Task 2: Go to the web page linked above
 **Task** Visit the web page linked above. Briefly describe what you see there.
-**Answer**
+**Answer** This webpage details information about the 2017 North American Industry Classification System.
 
 ### Task 3: Load image
 **Task** Run the following code to display an image showing what you should see on the web page.
@@ -78,7 +78,7 @@ In our web browser, if we right-click anywhere on the page and select "view sour
 
 ### Task 3: View source
 **Task** Follow the directions in the previous paragraph. Briefly describe what you see there.
-**Answer**
+**Answer** I see the source code of the webpage. 
 
 Here's a picture of what some of the source code looks like.
 
@@ -95,7 +95,7 @@ Let's write a bit of code to tell R to go to the URL for the page and ingest all
 
 ### Task 5: Run code to read in html
 **Task** Run the following code to read in the html. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The codeblock created a list of 2 under naics_industry.
 
 ```{r}
 # read in the html
@@ -115,7 +115,7 @@ If we click on the name "naics_industry" in our environment window, we can see t
 
 ### Task 6: Examine html
 **Task** Follow the directions in the previous paragraph to click on naics_industry in the environment window. Briefly describe what you see there.
-**Answer**
+**Answer** When clicking on naics_industry, it shows the general page structure of the webpage.
 
 Nested within the `<html>` tag is the `<head>` and `<body>`, the two fundamental sections of most web pages. We're going to pull information out of the `<body>` tag in a bit.
 
