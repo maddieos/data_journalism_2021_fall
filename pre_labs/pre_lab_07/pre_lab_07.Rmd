@@ -716,7 +716,7 @@ This contains all the steps we needed to extract the information from one sector
 First, we need to build a list of URLs to loop through in a "for loop." We can do that using the dataframe we made in the last chapter.
 ### Task 25: Run code to load the table from the last chapter
 **Task** Run the following code to load table from last chapter. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** the output displays a table with the sector number and sector descriptions. 
 ```{r}
 # Define url of page we want to scrape
 
@@ -756,7 +756,7 @@ We're going to use mutate() and paste0() to concatenate (mash together) the thin
 
 ### Task 26: Run code to build url
 **Task** Run the following code to build url. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** the output adds another column listed "sector_url."
 
 ```{r}
 
@@ -779,7 +779,7 @@ On the Utilities page (sector code 22), the ID for the table we want is "iag22em
 ### Task 27: Run code to build id
 **Task** Run the following code to build id. Briefly describe the output that appears below the codeblock.
 **Answer**
-
+The output displays the id as a new column listed "sector_xpath_id."
 ```{r}
 
 # Make a column with URL and xpath ID for each sector
@@ -795,7 +795,7 @@ Lastly, we're going to use filter to remove the "Public Administration" sector, 
 
 ### Task 28: Run code to filter table
 **Task** Run the following code to filter table. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** Thr output removed the public administration row. 
 
 ```{r}
 
@@ -818,7 +818,7 @@ We get 19 dataframes, each with one row, one for each sector.
 
 ### Task 29: Run code to run for loop and keep one row
 **Task** Run the following for loop and keep one row. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output displays a seperate table for each sector. 
 
 ```{r}
 
@@ -850,7 +850,7 @@ To see how this is working, we're going to edit our print statement at the end a
 
 ### Task 30: Run code to run for loop to store url and xpath value
 **Task** Run the following for loop to store url and xpath value. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output displays a loop of a list with each url and xpath value. 
 ```{r}
 
 # For loop, iterating over each row in our naics industry dataframe
@@ -883,7 +883,7 @@ So, when you run this code, it will print out 19 dataframes inside of nested lis
 
 ### Task 31: Run code to run for loop to get tables
 **Task** Run the following for loop to get tables. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output produced 19 tables. 
 
 ```{r}
 
@@ -917,7 +917,7 @@ In this next step, we use employment_info <- employment_info[[1]]  to extract ea
 
 ### Task 32: Run code to run for loop to clean up tables
 **Task** Run the following for loop to clean up tables. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output produced cleaned tables by getting rid of information we don't need. 
 
 ```{r}
 
@@ -958,7 +958,7 @@ We can add that back in by using bind_cols() to reconnect the each_row_df, which
 
 ### Task 33: Run code to run for loop to add in data
 **Task** Run the following for loop to add in data. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output added columns to display the sector code and name. 
 
 ```{r}
 
@@ -1001,7 +1001,7 @@ Let's use parse_number() to remove the comma from the jun_2021 number and conver
 ### Task 34: Run code to run for loop to clean up tables
 **Task** Run the following for loop to clean up tables. Briefly describe the output that appears below the codeblock.
 **Answer**
-
+The output removed the comma from June 2021 and changed it from a character to a number.
 ```{r}
 
 # For loop, iterating over each row in our naics industry dataframe
@@ -1053,7 +1053,7 @@ And inside our "for loop" at the end, we'll bind each employment_info dataframe 
 
 ### Task 35: Run code to run for loop to combine tables into a single table
 **Task** Run the following for loop combine tables into a single table. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output binded the employment_info dataframe to the new dataframe.
 
 ```{r}
 
@@ -1110,7 +1110,7 @@ Here's the table on the mining sector page: [https://www.bls.gov/iag/tgs/iag21.h
 
 ### Task 36: Go to the web page linked above
 **Task** Visit the web page linked above. Briefly describe what you see there.
-**Answer**
+**Answer** The webpage displays info about the mining, quarrying, and oil and gas extraction sector. 
 
 ### Task 37: Load image
 **Task** Run the following code to display an image showing what you should see on the web page.
@@ -1124,7 +1124,7 @@ And here's the table for the agriculture sector.
 
 ### Task 38: Go to the web page linked above
 **Task** Visit the web page linked above. Briefly describe what you see there.
-**Answer**
+**Answer** The wbepage displays the unemployment rate under the agriculture sector.
 
 ### Task 39: Load image
 **Task** Run the following code to display an image showing what you should see on the web page.
@@ -1138,7 +1138,7 @@ In the second row of this table, it has the unemployment rate. Nowhere on the pa
 
 ### Task 40: Run code to remove agriculture from table
 **Task** Run the following code to remove agriculture from table. Briefly describe the output that appears below the codeblock.
-**Answer**
+**Answer** The output adds N/A to the agriculture row under jun_2021_employees.
 
 ```{r}
 # remove the suspicious value for agriculture.
