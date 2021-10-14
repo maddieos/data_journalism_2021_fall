@@ -90,7 +90,10 @@ A6. The reason may be that these judicial districts have higher populations and 
 Q7. Which state had the most approved PPP loans per 100,000 population? [This web page](https://smussenden.github.io/coursefiles/ppp_scraping_example/index.html) has links to 52 individual web pages, one for each state (plus Washington, D.C. and Puerto Rico). Each of those web pages contains a one-row html table that has the name of the state, the number of approved loans, and the 2019 population. Here's an example for [Alabama](https://smussenden.github.io/coursefiles/ppp_scraping_example/states/alabama.html). You'll need to loop over the individual state urls, scrape each individual page and combine the information on each page into a single dataframe to answer this question.  
 A7.
 ```{r}
+alabama_url <- "https://smussenden.github.io/coursefiles/ppp_scraping_example/states/alabama.html" %>%
+  read_html()%>%
+  html_table()
 
-
+  
 
 ```
