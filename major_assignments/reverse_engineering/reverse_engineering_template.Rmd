@@ -125,7 +125,7 @@ group_by(disposition)%>%
 
 #CHICAGO PERCENT CHANGE
 chicago_total <- bind_cols(chicago_percent_2014,chicago_percent_2017)%>%
-  mutate(percentagechicago2017-percentagechicago2014)
+  mutate(change = percentagechicago2017-percentagechicago2014)
 
 #Boston
 #Boston 2014
