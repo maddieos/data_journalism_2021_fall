@@ -78,7 +78,7 @@ age5 <- get_acs(geography = "county",
 
 **Q2** Which Maryland counties have a median age of at least 50?
 **A2**
-Talbot County and Worcester County
+Talbot County and Worcester County have a media age of at least 50.
 ```{r}
 age50 <- get_acs(geography = "county",
               variables = c(medinage = "B01002_001"),
@@ -91,8 +91,34 @@ age50 %>%
 
 **Q3** Which Maryland counties have the highest percentage of 5-17 year-olds that speak Spanish at home? You'll need one dataframe with county-level data on the number of 5-17 year-olds that speak Spanish at home and a second dataframe with the total population of 5-17 year-olds by county. For each dataframe, rename the `estimate` column to a meaningful name you've given the ACS variable, remove the `variable` columns in each using select and then join them based on GEOID and NAME. Then you can add a column to calculate the percentage of the total 5-17 population that speaks Spanish at home.
 **A3**
-
+Prince George's County has the highest percentage of 5-17 year-olds that speak Spanish at home.
 ```{r}
+spanish <- get_acs(geography = "county",
+              variables = c(agespanish = "B16003_004"),
+              state = "MD",
+              year = 2019)
+
+spanish <- spanish %>%
+  rename(spanestimate = estimate ) %>%
+  select(-variable, -moe)
+
+population <- get_acs(geography = "county",
+              variables = c(agetotal = "B06001_003"),
+              state = "MD",
+              year = 2019) 
+
+population <- population %>%
+  rename(popestimate = estimate ) %>%
+  select(-variable,-moe)
+
+alldata <- spanish %>%
+  inner_join( population )
+
+alldata <- alldata %>%
+  mutate(change= (spanestimate/popestimate)) %>%
+  arrange(desc(change))
+  
+
 ```
 
 **Q4** Given the counties with the largest percentage of 5-17 year-olds that speak Spanish at home, what stands out to you about the data? How would you describe the top 5 counties? How would you describe Garrett County's numbers?
