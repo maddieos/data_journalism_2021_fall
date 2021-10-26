@@ -30,7 +30,7 @@ The dataset we'll use is the PPP loan data for Maryland.  Let's load it.
 
 ### Task 2: Load data
 **Task** Run the following code to load packages. In the space below, indicate how many rows and columns it has.
-**Answer**
+**Answer** There are 195865 rows and 63 columns.
 
 ```{r}
 ppp_maryland <- read_csv("data/ppp_loans_md.csv.zip")
@@ -51,7 +51,7 @@ First, we'll create a dataframe of those top 10, called maryland_ppp_top_countie
 ### Task 3: Create a dataframe of top 10 counties for PPP loans in Maryland
 **Task** Run the following code to create a dataframe of top 10 loans by county in Maryland. In the space below, explain what each step of the code below is doing in English.
 **Answer**
-
+Line 56 is taking the ppp_maryland data and making it a new dataframe called maryland_ppp_top_counties. Line 56 is grouping all of the data by the project_county_name. Like 58-60 is telling the new dataframe to list the amount if total loans for each county. Line 61 is arranging the total loans from greatest to least. 
 ```{r}
 maryland_ppp_top_counties <- ppp_maryland %>%
   group_by(project_county_name) %>%
@@ -71,7 +71,7 @@ With ggplot, the first thing we'll always do is draw a blank canvas that will ho
 ### Task 4: Create an empty ggplot container
 **Task** Run the following code. Explain what you see after running the code in the space below.
 **Answer**
-
+There is a gray box that is displayed after running this code.
 ```{r}
 maryland_ppp_top_counties %>%
   ggplot()
@@ -102,7 +102,7 @@ After we've invoked the ggplot() function, you'll notice we're using a + symbol.
 ### Task 5: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below.
 **Answer**
-
+The following code created a bar graph showing the count of total loans for each county.
 ```{r}
 maryland_ppp_top_counties %>%
   ggplot() +
@@ -114,7 +114,7 @@ This is a very basic chart.  But it's hard to derive much meaning from this char
 ### Task 6: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. What has changed from the last codeblock?
 **Answer**
-
+The bar graph now organizes the total loans from least to greatest on the graph.
 ```{r}
 maryland_ppp_top_counties %>%
   ggplot() +
@@ -126,7 +126,7 @@ This is a little more useful. But the bottom is kind of a mess, with overlapping
 ### Task 7: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. What has changed from the last codeblock?
 **Answer**
-
+The county names have moved to the y-axis and the total loan amount moved to the x-axis.
 ```{r}
 maryland_ppp_top_counties %>%
   ggplot() +
@@ -144,7 +144,7 @@ It's kind of like applying CSS to html. Here I'm changing the theme slightly to 
 
 ### Task 8: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. What has changed from the last codeblock?
-**Answer**
+**Answer** The theme changed to the minimal theme, making the style of the graph much cleaner. 
 
 ```{r}
 maryland_ppp_top_counties %>%
