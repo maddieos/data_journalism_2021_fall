@@ -171,7 +171,7 @@ And now we'll apply the economist theme from that package with theme_economist()
 
 ### Task 10: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. What has changed from the last version of the chart?
-**Answer**
+**Answer** The style of the graph changed, now there is a light blue background, a different style graph, and a different font.
 ```{r}
 maryland_ppp_top_counties %>%
   ggplot() +
@@ -183,7 +183,7 @@ Those axis titles are kind of a mess. Let's change "count" on the x axis to "tot
 
 ### Task 11: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. What has changed from the last codeblock?
-**Answer**
+**Answer** This code added a title to the graph and a source attribution below the graph. 
 
 ```{r}
 maryland_ppp_top_counties %>%
@@ -211,7 +211,7 @@ So, let's create a dataframe with a count of Maryland loans for each date in our
 
 ### Task 12: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. 
-**Answer**
+**Answer** I see a dataframe detailing the total loans approved on a certain date. 
 
 ```{r}
 
@@ -230,7 +230,7 @@ We'll put the date on the x axis and total loans on the y axis.
 
 ### Task 13: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. 
-**Answer**
+**Answer** There is a line graph with total loan values on the y axis and the date approved as the x axis. 
 
 ```{r}
 ppp_maryland_loans_by_date %>%
@@ -252,7 +252,7 @@ We'll set the date_breaks to appear for every month; if we wanted every week, we
 
 ### Task 14: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. 
-**Answer**
+**Answer** The scale of the x-axis is now monthly.
 
 ```{r}
 ppp_maryland_loans_by_date %>%
@@ -267,7 +267,7 @@ Those are a little hard to read, so we can turn them 45 degrees to remove the ov
 
 ### Task 15: Run the following code
 **Task** Run the following code. Explain what you see after running the code in the space below. 
-**Answer**
+**Answer**The code made the dates along the x-axis visbile, so they are angled better to read. 
 ```{r}
 ppp_maryland_loans_by_date %>%
   ggplot() + 
