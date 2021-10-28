@@ -28,6 +28,7 @@ library(tidycensus)
 
 **Q1.** Which day in April 2020 saw the most loans approved in West Virginia? 
 
+
 You MUST do the following things when answering this question:
 * Use the WV ppp loan data, which is in the data folder and is called lab_09.rds.
 * Make a line chart with ggplot that:
@@ -71,7 +72,7 @@ Basically, your chart should look like this image, which will appear when you ru
 ```{r}
 knitr::include_graphics(rep("images/chart_1.png"))
 ```
-**A1.** 
+**A1.** April 28, 2020 saw the most loans approved in West Virginia.
 
 **Q2.** What are the top 10 states that got the most PPP loans per 100,000 people? You MUST do the following things when answering this question:
 
@@ -80,6 +81,48 @@ knitr::include_graphics(rep("images/chart_1.png"))
 * Use the tidycensus API to get a table of total population by state from the American Community Survey (ACS). To do this, you'll use use the alphanumeric variable for total population, which has the following "label" and "concept": "Estimate!!Total:" and "SEX BY AGE".  
 * Use ggplot to make a horizontal bar chart that shows the top 10 states, with the length of the bar determined by the state's total PPP loans per 100,000 people. Give it an appropriate title, source, and x and y axis titles. 
 * Make the bars on the chart blue! I didn't show you how to do this in the prelab, so do some web sleuthing to figure it out.  
+```{r}
+state_ppp_all <- read_csv("data/state_ppp_all.csv")
+v19 <- load_variables(2019, "acs5", cache = TRUE)
+
+acs_data <- get_acs(geography="state", variables = "B01001_001")
+
+
+#acs_data <- acs_data %>%
+  #select(-GEOID, -moe, -variable) %>%
+  #rename(state=NAME)
+
+state_ppp_all <- state_ppp_all %>%
+  mutate(state = case_when(
+    state == "S Dakota" ~ "South Dakota",
+    state == "N Dakota" ~ "North Dakota",
+    TRUE ~ state
+  ))
+  #select(-city)
+
+alldata <-acs_data %>%
+  inner_join(state_ppp_all)
+  #select(-city)
+
+
+alldata <- alldata %>%
+  mutate(percent= (total_ppp_loans/estimate)*100000) %>%
+  arrange(desc(percent)) %>%
+  head(10)
+ 
+
+alldata %>%
+  ggplot() +
+  geom_bar(aes(x=reorder(state, percent), weight=percent), fill= "2f53da") +
+  coord_flip() +
+  
+  labs(
+    title="The Top 10 States with the Most PPP Loans per 100,000 people",
+    x = "Loans per 100,000",
+    y = "State",
+    caption = "source: SBA PPP loan database"
+  ) 
+```
 
 **A2.** 
 
