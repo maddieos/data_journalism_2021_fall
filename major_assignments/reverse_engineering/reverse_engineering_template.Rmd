@@ -215,6 +215,7 @@ group_by(disposition)%>%
   mutate(total_homicides = sum(count)) %>%
   filter(disposition == "Closed by arrest") %>%
   mutate(percentage = count / total_homicides) 
+
 # Display results of code below this codeblock
 
 ```
@@ -222,25 +223,41 @@ group_by(disposition)%>%
 ### Sentence 4
 
 * **Sentence text**: Baltimore is also one of 30 cities that have seen an increase in homicides in recent years, with the greatest raw number increase in killings of any city other than Chicago, which has four times the population.
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
+* **Analysis summary**: After creating a data frame that compares the difference between homicides in 2014 and 2017 per city, the statement made by the Washington Post is incorrect. Baltimore is one of 25 cities that have seen an increase in homicides in recent years. The second statement is correct. Baltimore has the greatest raw number increase in killings, 129, of any city other than Chicago, which has an increase of 236 homicides. The data does not have information concerning the population of each city, but by Google search, Baltimore has a population of approximately 609,032 and Chicago has a population of approximately 2.71 million. Chicago has 4.45 times the population as Baltimore, which can be rounded down to four times the population. Therefore, the last statement is correct as well. 
 
 ```{r}
-# Put code to reverse engineer sentence here
+#Code that organizes top 30 cities (2014 v 2017)
+homicide_2014 <- baltimore_homicide %>%
+  mutate(reported_date = as.Date(as.character( reported_date), 
+  format="%Y%m%d")) %>%
+  filter(reported_date >= as.Date("2014-01-01"), reported_date <= as.Date("2014-12-31")) %>%
+  group_by(city) %>%
+  summarise(
+    count= n()) %>%
+   arrange(desc(count))
 
-# Display results of code below this codeblock
+
+homicide_2017 <- baltimore_homicide %>%
+  mutate(reported_date = as.Date(as.character( reported_date), 
+  format="%Y%m%d")) %>%
+  filter(reported_date >= as.Date("2017-01-01"), reported_date <= as.Date("2017-12-31")) %>%
+  group_by(city) %>%
+  summarise(
+    count= n()) %>%
+   arrange(desc(count)) %>%
+  rename(count2 = count)
+
+alldata <- homicide_2014 %>%
+  inner_join(homicide_2017)
+
+alldata <- alldata %>%
+  mutate(difference=count2 - count) %>%
+  arrange(desc(difference))
+
+
+  
 
 ```
 
-### Sentence 5
-
-* **Sentence text**: [Paste in sentence to engineer here]
-* **Analysis summary**: [Write up two to three sentences describing the results of your analysis.  Were you able to confirm the finding? If not, why not?]
-
-```{r}
-# Put code to reverse engineer sentence here
-
-# Display results of code below this codeblock
-
-```
 
 -30-
