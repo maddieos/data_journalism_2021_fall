@@ -113,7 +113,7 @@ alldata <- alldata %>%
 
 alldata %>%
   ggplot() +
-  geom_bar(aes(x=reorder(state, percent), weight=percent), fill= "2f53da") +
+  geom_bar(aes(x=reorder(state, percent), weight=percent), fill= "blue") +
   coord_flip() +
   
   labs(
