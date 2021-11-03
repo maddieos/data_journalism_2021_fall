@@ -161,7 +161,7 @@ md_fips <- md_fips %>% mutate(match_county = str_to_upper(county)) %>%
 
 **Task** Now we'll join `md_counties` and `md_fips` together using our new `match_county` column:
 **Answer** Describe here what you see in `md_counties_with_fips`
-The new data frame combines the porject county name with the FIPS code.
+The new data frame combines the project county name with the FIPS code.
 ```{r}
 md_counties_with_fips <- md_counties %>%
   left_join(md_fips, by=c('project_county_name'='match_county'))
@@ -196,7 +196,7 @@ You'll see that the map currently is of the whole nation, and we only have Maryl
 
 **Task** Look for "Hide regions without data" under Appearance, and click the slider icon to enable that feature. You should see a map zoomed into Maryland with some counties in various colors.
 **Answer** Describe the changes from the previous map
-
+The previous map was of the entire country now the map only shows counties in Maryland. 
 But it's a little rough visually, so let's clean that up.
 
 **Task** Look for the "Show color legend" label and add a caption for the legend, which is the horizontal bar under the title. It represents the extent of the data from smallest number of loans to largest. Then click on the "Annotate" tab to add a title, description, data source and byline. The title should represent the headline, while the description should be a longer phrase that tells people what they are looking at.
@@ -205,8 +205,9 @@ That's better, but check out the tooltip by hovering over a county. It's not sup
 
 **Task** Click the "Customize tooltips" button so it expands down. Change {{ fips }} to {{ county }} and {{ count }} to {{ FORMAT(count, "0,0.[00]")}}
 **Answer** Describe the changes from the previous map
-
+When you hover over the county with your mouse, it shows the county name instead of the zipcode and the number contains commas. 
 Ok, that looks better. Let's publish!
 
 **Task** Click the "Proceed" button until you get to the "Publish & Embed" tab, then click "Publish Now". Copy the URL and paste it below.
 **Answer** Put the URL of your map here.
+https://datawrapper.dwcdn.net/1sX1I/1/
