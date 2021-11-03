@@ -161,7 +161,7 @@ md_fips <- md_fips %>% mutate(match_county = str_to_upper(county)) %>%
 
 **Task** Now we'll join `md_counties` and `md_fips` together using our new `match_county` column:
 **Answer** Describe here what you see in `md_counties_with_fips`
-
+The new data frame combines the porject county name with the FIPS code.
 ```{r}
 md_counties_with_fips <- md_counties %>%
   left_join(md_fips, by=c('project_county_name'='match_county'))
