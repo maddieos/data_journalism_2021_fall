@@ -19,10 +19,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * A Census API key
 
+
 ## Load libraries and establish settings
+
 
 **Task** Create a codeblock and load appropriate packages and settings for this lab.
 
+```{r}
+library(tidyverse)
+library(tidycensus)
+```
+```{r echo=FALSE}
+census_api_key("2181c12b8e092a4bd036068e6b77a130eb51b099", overwrite=TRUE)
+```
 ## Questions
 
 **Q1.** You got a tip that there are some unusual patterns among applicants listing barber shops as their occupation. Which state has the most PPP applications from barber shops, and how many of those have undisbursed amounts greater than $0? Which state has the most undisbursed applications?
@@ -42,8 +51,34 @@ You MUST do the following things when answering this question:
 * Publish your chart (you may need to confirm your Datawrapper account if you haven't already in order to do this)
 * Put the answer below along with the URL of your chart.
 
-**A1.**
+```{r}
+barber_shops_ppp <- read_csv("data/barber_shops_ppp.csv")
 
+barber_shops_states <- barber_shops_ppp %>%
+  group_by(state)%>%
+   summarise(
+    count= n()) %>%
+   arrange(desc(count)) %>%
+  rename(total_apps = count) 
+   
+barber_shops_undisbursed <- barber_shops_ppp %>%
+  group_by(state) %>%
+  filter(undisbursed_amount > 0) %>%
+  summarise(
+    count= n()) %>%
+  arrange(desc(count)) %>%
+  rename(undisbursed_apps = count) 
+
+alldata <- barber_shops_states %>%
+  inner_join(barber_shops_undisbursed)%>%
+  head(10)
+
+write_csv(x = alldata, "alldata.csv")
+```
+
+**A1.**
+Illinois has the most PPP applications and the most undisbursed applications. Out of the 11080 applications, 1713 applications had an undisbursed amount greater than zero.
+https://datawrapper.dwcdn.net/VcRgk/1/ 
 **Q2.** Using Datawrapper, make a different (ideally better) version of the chart you made above. TO BE CLEAR: this new graphic should show information about states and loans with undisbursed amounts, so don't, for example, focus on a single state. To do this, you MUST go back in R and do any calculations or add additional data to make the chart more effective or answer the above question in a different way. Your chart MUST be different in that it cannot be a bar chart showing the counts of total and undisbursed applications by state. It could be a bar chart showing another calculation or metric, or a scatterplot, or some other form. Follow the same general guidelines as above for the chart's visual elements, and publish it and including the URL below, along with an explanation of how this chart is different from the first one and how you decided what to do.
 
 **A2.**
