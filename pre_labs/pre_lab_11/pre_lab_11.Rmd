@@ -54,7 +54,7 @@ When you do, it should look something like this:
 ### Task: Load image
 **Task** Run the following code to load an image. Describe what you see in the answer space below.
 **Answer**
-
+There is a .shp file that combines data about every hospital in the US and the number of beds they have. 
 ```{r, echo=FALSE}
 knitr::include_graphics(rep("images/geolayers2.png"))
 ```
@@ -64,7 +64,7 @@ Simlar to `readr`, the `sf` library has functions to read geographic data. In th
 ### Task: Load data
 **Task** Run the following code to load data. Describe what you see in the answer space below. What columns exist in this data?
 **Answer**
-
+There ar 33 columns in this data set.These columns include information about location, such as address, city, state, zip. There are also columns detailing if the hospital has a helipad, trauma center, and the amount of hospital beds.
 ```{r}
 hospitals <- st_read("data/Hospitals/Hospitals.shp")
 
@@ -78,7 +78,7 @@ Let's look at just Maryland hospitals. Good news -- `sf` plays very nicely with 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+According to this data, there are 72 hospital in Maryland. 
 ```{r}
 md_hospitals <- hospitals %>% 
   filter(STATE == "MD")
@@ -93,7 +93,7 @@ What kind of hospitals do we have?
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output below groups the hospitals by type. There are 50 General Acute Care hospitals in MD and 11 Psychiatric hospitals.
 ```{r}
 md_hospitals %>%
   group_by(TYPE) %>%
@@ -125,7 +125,7 @@ We can simply plot them on a longitude-latitude grid using ggplot.
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** The output shows a longitude-latitude grid that plots all of the coordinates for each hospital.
 
 ```{r}
 md_hospitals %>%
