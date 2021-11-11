@@ -159,7 +159,7 @@ Now, let's use the counties() function from tigris to pull down a shapefile of a
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** The output looks similar to the output of the hospital shapefile,but there is a new column about geometry. There are 3,233 counties in this data frame.  
 ```{r}
 
 counties <- counties() 
@@ -178,7 +178,7 @@ This county shapefile has all 3233 U.S. counties.  We only want the Maryland cou
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The codeblock filtered the counties dataframe to only include counties that are in Maryland, and then saved the new data frame as "md_counties."
 ```{r}
 md_counties <- counties %>%
   filter(STATEFP == "24")
@@ -189,7 +189,7 @@ To see what this looks like, let's plot it out with ggplot. We can pretty clearl
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** The codeblock plotted the coordinates of each county and created a map of Maryland with the counties.
 
 ```{r}
 md_counties %>%
@@ -207,7 +207,7 @@ We're also going to change things up a bit to put the datasets we want to displa
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output added points to the locations of hospitals in each county.
 ```{r}
 
 ggplot() + 
@@ -226,7 +226,7 @@ We can get a sense of where the largest hospitals are, by changing the color of 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The code block added a color coordinated key to show the number of bed space at hospitals during COVID-19 surges. The color of the points correlates with the color of the key.
 ```{r}
 
 ggplot() + 
@@ -248,14 +248,14 @@ First, let's load the libraries we'll need. We're also going to load tidycensus 
 
 ### Task: Load libraries
 **Task** Run the following code. Describe the output in the space below. Be sure to input your census api key.
-**Answer**
+
 
 ```{r}
 library(tidyverse)
 library(sf)
 library(janitor)
 library(tidycensus)
-#census_api_key("549950d36c22ff16455fe196bbbd01d63cfbe6cf")
+census_api_key("549950d36c22ff16455fe196bbbd01d63cfbe6cf")
 
 ```
 
@@ -265,7 +265,7 @@ And now let's load the dataframe of hospital information from the previous chapt
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output reads in information from the hospitals shapefile. The codeblock filters the data to only show general acute care hospitals in Maryland. 
 ```{r}
 md_hospitals <- st_read("data/Hospitals/Hospitals.shp") %>% 
   filter(STATE == "MD") %>%
@@ -282,7 +282,7 @@ Each hospital exists inside of a county, so we're going to first calculate the t
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The following output groups hospitals by county and then lists the total amount of hospital beds per county. The output shows that Baltimore City has the most available hospital beds, at 4505.
 ```{r}
 
 md_beds_by_county <- md_hospitals %>%
@@ -303,7 +303,7 @@ Next, we'll go out and get population data for each county from tidycensus.  The
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output displays the population for each Maryland county. 
 ```{r}
 
 md_county_population <- get_acs(geography = "county", 
@@ -319,7 +319,7 @@ Ultimately, we're going to join this county population table with our beds by co
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output includes a new category, geometry, which includes the multipolygon data.
 ```{r}
 
 md_county_population <- get_acs(geography = "county", 
