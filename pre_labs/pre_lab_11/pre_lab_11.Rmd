@@ -340,7 +340,7 @@ But there's a problem.  The column in our population data that has county names 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+This displays two outputs, one with the population data and one with the hospital beds data.
 ```{r}
 
 md_county_population
@@ -355,7 +355,7 @@ Let's clean the population table. We're going to rename the "NAME" column to "CO
 
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
-**Answer**
+**Answer** The code block cleans the population data so that it can be joined with the hospital beds data.
 
 ```{r}
 md_county_population <- md_county_population %>%
@@ -375,7 +375,7 @@ Now we can join them.
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+Now the population and hospital beds data is all joined together by county.
 ```{r}
 md_beds_per_100k <- md_county_population %>%
   left_join(md_beds_by_county)
@@ -390,7 +390,7 @@ We have two NAs after we join, for Queen Anne's County and Carolina County.  Tha
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output replaced the the values listed as NA with 0.
 ```{r}
 md_beds_per_100k <- md_county_population %>%
   left_join(md_beds_by_county) %>%
@@ -405,7 +405,7 @@ Our final step before visualization, let's calculate the number of beds per 100,
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output added a new column that lists the total beds per 100,000 people per county.
 ```{r}
 md_beds_per_100k <- md_county_population %>%
   left_join(md_beds_by_county) %>%
@@ -424,7 +424,7 @@ Okay, now let's visualize.  We're going to build a choropleth map, with the colo
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
-
+The output is a map of Maryland by county that color cooridinates each county by the total hospital beds per 100k.
 ```{r}
 ggplot() + 
   geom_sf(data=md_beds_per_100k, aes(fill=beds_per_100k)) + 
@@ -436,6 +436,7 @@ This map is okay, but the color scale makes it hard to draw fine-grained differe
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below.
 **Answer**
+This output added a new color scale, whcih makes it easier to differentiate the key.
 
 ```{r}
 ggplot() + 
@@ -451,7 +452,7 @@ So let's change the color scale to a "log" scale, which will help us see those d
 ### Task: Run code
 **Task** Run the following code. Describe the output in the space below. What patterns do you see?
 **Answer**
-
+The output includes the log function which makes the differences between the values more apparent. 
 ```{r}
 ggplot() + 
   geom_sf(data=md_beds_per_100k, aes(fill=beds_per_100k)) + 
