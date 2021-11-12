@@ -145,4 +145,12 @@ ggplot() +
 * What's your hypothesis for why a company in their specific industry would need to seek a PPP loan during the pandemic?
 
 **A4.**
+Hall Drilling LLC. accounts for the biggest chunk of the total loan amount. They are an oil drilling company that offers construction, trucking, drilling, and product installation services. The company retained 387 jobs. They may have needed a loan because no new construction was happening during the pandemic and many construction projects were halted during this period.
+
+```{r}
+oil_data<-wv_slice_ppp%>%
+  filter(str_detect(naics_code, "^21"))%>%
+  filter(project_county_name=="RITCHIE")%>%
+  arrange(desc(amount))
+```
 -30-
