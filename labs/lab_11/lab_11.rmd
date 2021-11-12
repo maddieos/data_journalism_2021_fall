@@ -47,6 +47,8 @@ Then answer these questions:
 * Based on the table, what county got the highest total loan amount? What was the total amount per 100K population, the total amount of loans (not population adjusted), how many loans were there, and what's the population?
 
 **A1.** 
+The south west region of West Virginia has the most loans in this industry based on the map. There is a large cluster of orange areas in that region. The eastern region of West Virginia does not have many loans in this industry. Ritchie County has the most loans out of all of the counties. It had 77752742 per 100,000 and the total amount of loans was 7653980. The population of this county is 9844.
+
 ```{r}
 oil_data <- wv_slice_ppp%>%
   filter(str_detect(naics_code,"^21"))
@@ -96,6 +98,33 @@ Make a map with a point for each one of these mine permits and put a blank map w
 What spatial pattern do you see? How does it compare to the spatial pattern in the first map you made?
 
 **A2.**
+Most of the mine permits, displayed as points on the map, are in the same places where the highest number of mining loans were located in the previous map. The general area where the points are located are clustered where the areas are orange in the previous map. This means that there must be a correlation between mine permits and loans for the industry.
+
+```{r}
+lat_log <- st_read("https://tagis.dep.wv.gov/arcgis/rest/services/WVDEP_enterprise/mining_reclamation/MapServer/0/query?where=1%3D1&outFields=*&geometry=&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outSR=4326&f=json")
+
+expire_dates <- lat_log%>%
+  filter(str_detect(expiredate, "^2021/09"))
+
+wv_county_population <- get_acs(geography = "county", 
+  variables = c(population = "B01001_001"), 
+              state = "WV",
+              geometry = TRUE)
+ expire_dates%>%
+  ggplot() + 
+  geom_sf() + 
+  theme_minimal()
+ 
+wv_county_population %>%
+  ggplot() + 
+  geom_sf() + 
+  theme_minimal()
+  ggplot() + 
+  geom_sf(data=wv_county_population) + 
+  geom_sf(data= expire_dates) +
+  theme_minimal()
+
+```
 
 **Q3.** To confirm the spatial comparison you identified in question 2, let's create a new map that layers the mine location points on top of our PPP choropleth map we created in question 1. What do you notice about the amount of mines in the county that has the highest total loan amount per 100K?
 
