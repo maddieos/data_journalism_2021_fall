@@ -129,7 +129,15 @@ wv_county_population %>%
 **Q3.** To confirm the spatial comparison you identified in question 2, let's create a new map that layers the mine location points on top of our PPP choropleth map we created in question 1. What do you notice about the amount of mines in the county that has the highest total loan amount per 100K?
 
 **A3.**
+As I predicted in the previous question, many of the points fall into the south west region of the country where most of the loans are. The amount of mines are in the county (Ritchie County) that has the most total loan amount per 100k.
+```{r}
+ggplot() + 
+  geom_sf(data=loans_per_100k, aes(fill=amount_per_100k)) + 
+  geom_sf(data= expire_dates) +
+  scale_fill_viridis_b(option="magma",trans = "log") +
+  theme_minimal()
 
+```
 **Q4.** Starting from the original WV ppp dataframe, examine the loans to companies in "Mining, Quarrying, and Oil and Gas Extraction" in the county with the highest total loan amount per 100K (you can use the table you created in question 1 to identify the top county)?
 * What single company accounts for the biggest chunk of the total loan amount? 
 * What specific industry are they in, based on their 6-digit NAICS code? Look them up on the web. What services do they provide?
