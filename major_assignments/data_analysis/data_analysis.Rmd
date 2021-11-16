@@ -24,6 +24,9 @@ options(scipen=999)
 library(tidyverse)
 library(lubridate)
 library(refinr)
+library(tidycensus)
+install.packages("censusxy")
+
 ```
 
 ## Load and Cleaning Data
@@ -40,6 +43,9 @@ fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv")
 *Are police shootings happening mostly in majority-black communities, even when the victim is not black?
 
 ```{r}
+
+
+
 ```
 
 ### Question 2
