@@ -1,0 +1,58 @@
+---
+title: "Data Analysis Project"
+author: "Kassidy, Maddie, Cassidie"
+output:
+  html_document:
+    theme: cerulean
+    highlight: pygments
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries
+
+Loading required libraries for this analysis.
+
+```{r echo=FALSE, message=FALSE}
+options(scipen=999)
+library(tidyverse)
+library(lubridate)
+library(refinr)
+```
+
+## Load and Cleaning Data
+
+```{r}
+# Load required data
+fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv") 
+# Clean required data and prepare for analysis if needed. 
+```
+
+
+
+### Question 1
+*Are police shootings happening mostly in majority-black communities, even when the victim is not black?
+
+```{r}
+```
+
+### Question 2
+*Do these shootings mostly occur in low income areas? 
+
+```{r}
+```
+
+### Question 3
+*Are police shootings still happening disproportionately affecting black people regardless of the area (even in white neighborhoods)?
+
+```{r}
+```
+
+
+-30-
