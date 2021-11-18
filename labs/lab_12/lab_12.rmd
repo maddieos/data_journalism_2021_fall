@@ -54,7 +54,17 @@ Put your sentence in the answer below.
 kids_vaccinations <- read_csv("https://raw.githubusercontent.com/state-of-maryland/VaccineCSVs/master/MD_COVID19_VaccinationPercentAgeGroupPopulation.csv")
 
 kids_vaccinations <- kids_vaccinations %>%
-  filter(AgeRange == "11 and Under")
+  filter(AgeRange == "11 and Under") %>%
+  mutate(VACCINATION_DATE = mdy_hms(VACCINATION_DATE)) %>%
+  arrange(desc(VACCINATION_DATE))
+
+most_recent_day <- kids_vaccinations %>% slice(1)
+
+yesterday <- kids_vaccinations %>% slice(2)
+
+one_week_ago <- kids_vaccinations %>% slice(7)
+  
+
 ```
 
 **Q2.** Maryland produces a [CSV file](https://raw.githubusercontent.com/state-of-maryland/VaccineCSVs/master/Vax_ZIP_CODE_FirstSecondSingle_Totals_Raw.csv) showing the total number of vaccinations by zip code and -- interestingly -- it includes non-Maryland zip codes (as well as some zip codes that seem to be bad data). write a script that reads the CSV file, making the columns more readable and adding today's date. Then output the top 25 Maryland zip codes and top 25 non-Maryland zip codes based on number of people fully vaccinated, and write both dataframes out to CSV files, using the following name formats:
