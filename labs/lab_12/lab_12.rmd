@@ -49,6 +49,7 @@ Then write code that will construct the sentence about the data described above 
 Put your sentence in the answer below.
 
 **A1.**
+"The number of children under 12 in Maryland that received their first single dose on November 17 decreased by -65.5 percent compared to the week before and decreased by -49.99 percent compared to yesterday"
 
 ```{r}
 kids_vaccinations <- read_csv("https://raw.githubusercontent.com/state-of-maryland/VaccineCSVs/master/MD_COVID19_VaccinationPercentAgeGroupPopulation.csv")
@@ -99,8 +100,28 @@ Google the top 2-3 zip codes from both Maryland and non-Maryland results and des
 **A2.**
 
 ```{r}
+zip_vaccinations <- read_csv("https://raw.githubusercontent.com/state-of-maryland/VaccineCSVs/master/Vax_ZIP_CODE_FirstSecondSingle_Totals_Raw.csv")
+
+maryland_zips <- zip_vaccinations %>%
+  filter(ZIP_CODE >= 20587,
+         ZIP_CODE <= 21921,
+         !is.na(FullyVaccinated)) %>%
+  arrange(desc(FullyVaccinated)) %>%
+  slice(1:25)
+
+
+non_maryland <- zip_vaccinations %>%
+  filter(ZIP_CODE <= 20587 |
+         ZIP_CODE >= 21921,
+         ZIP_CODE >= 8902,
+         !is.na(FullyVaccinated)) %>%
+  arrange(desc(FullyVaccinated)) %>%
+  slice(1:25)
+
+
 ```
 
+NUMBER 3 OPTIONAL
 **Q3.** Maryland has had one of the more successful vaccination rates, but you want to understand where a significant portion of the population remains less than fully vaccinated. Make a dataframe of all Maryland zip codes from the vaccination data you used in Q2 and join it to Maryland zip code population data from the Census API. Calculate the percentage of fully vaccinated for each zip code and then make a map showing the zip codes with less than 50 percent fully vaccinated. Put a blank map with the outline of Maryland counties (which you can get from Tigris) behind it for context. Add a label to the map describing what the data is and include the date from the vaccination data (programmatically, so you can run it every day).
 
 You WILL need to ensure that the columns you use to join the two dataframes are the same datatype and remember that join order matters.
