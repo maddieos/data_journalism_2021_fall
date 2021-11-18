@@ -98,10 +98,18 @@ To do that, you will need to:
 Google the top 2-3 zip codes from both Maryland and non-Maryland results and describe them in your answer.
 
 **A2.**
-
+All three of the top zip codes are located near Rockville, Maryland, which is near Washington, D.C. The top two zipcodes are in the top three most populous zipcodes in MD. Concerning the non-Maryland results, the top three zip codes are all located in Washington, D.C., which is not surprising as that is a populous, liberal area which would explain such high vaccination rates.
 ```{r}
 zip_vaccinations <- read_csv("https://raw.githubusercontent.com/state-of-maryland/VaccineCSVs/master/Vax_ZIP_CODE_FirstSecondSingle_Totals_Raw.csv")
 
+# I tried to figure out how to make the date automated so it will update each day and not stay set to 2021-11-18. I wasn't sure how to add that while also keeping today's date.
+zip_vaccinations <- zip_vaccinations %>%
+  add_column(VaccinationDate = "2021-11-18") %>%
+  mutate(VaccinationDate  = as.Date(as.character(VaccinationDate), 
+  format="%Y%m%d")) %>%
+  mutate(VaccinationDate = "2021-11-18")
+
+  
 maryland_zips <- zip_vaccinations %>%
   filter(ZIP_CODE >= 20587,
          ZIP_CODE <= 21921,
@@ -111,13 +119,16 @@ maryland_zips <- zip_vaccinations %>%
 
 
 non_maryland <- zip_vaccinations %>%
-  filter(ZIP_CODE <= 20587 |
-         ZIP_CODE >= 21921,
-         ZIP_CODE >= 8902,
+  filter(ZIP_CODE < 20587 |
+         ZIP_CODE > 21921,
+         ZIP_CODE > 8902,
          !is.na(FullyVaccinated)) %>%
   arrange(desc(FullyVaccinated)) %>%
-  slice(1:25)
-
+  slice(1:25) 
+  
+  
+write_csv(x = non_maryland, "non_maryland_zips_yyyymmdd.csv")
+write_csv(x = maryland_zips, "maryland_zips_yyyymmdd.csv")
 
 ```
 
@@ -131,4 +142,6 @@ Describe the output of the map below, and say what you think the most interestin
 **A3.**
 
 ```{r}
+
+QUESTION 3 OPTIONAL
 ```
