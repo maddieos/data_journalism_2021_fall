@@ -70,8 +70,14 @@ most_recent_day <- most_recent_day %>%
 most_recent_day <- most_recent_day %>%
   mutate(pct_change_day = (FirstDailyDose -   yesterday$FirstDailyDose)/yesterday$FirstDailyDose*100)
 
+changetext <- round(most_recent_day$pct_change_week[[1]], digits=2)
+direction <- if_else(changetext > 0, "increased", "decreased")
 
+changetext2 <- round(most_recent_day$pct_change_day[[1]], digits=2)
+direction2 <- if_else(changetext > 0, "increased", "decreased")
 
+sub <- paste("The number of children under 12 in Maryland that received their first single dose on ", format(most_recent_day$VACCINATION_DATE, format="%B %d"), " ", direction, " by ", changetext, " percent compared to the week before and ", "", direction2, " by ", changetext2, " percent compared to yesterday", sep="")
+sub
 
 ```
 
