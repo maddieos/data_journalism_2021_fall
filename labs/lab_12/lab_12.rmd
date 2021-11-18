@@ -63,7 +63,15 @@ most_recent_day <- kids_vaccinations %>% slice(1)
 yesterday <- kids_vaccinations %>% slice(2)
 
 one_week_ago <- kids_vaccinations %>% slice(7)
-  
+
+most_recent_day <- most_recent_day %>%
+  mutate(pct_change_week = (FirstDailyDose - one_week_ago$FirstDailyDose)/one_week_ago$FirstDailyDose*100)
+
+most_recent_day <- most_recent_day %>%
+  mutate(pct_change_day = (FirstDailyDose -   yesterday$FirstDailyDose)/yesterday$FirstDailyDose*100)
+
+
+
 
 ```
 
