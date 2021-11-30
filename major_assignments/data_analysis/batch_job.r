@@ -32,7 +32,9 @@ for (row_number in 1:nrow(police_shootings)) {
   longitude <- row_df$longitude
   latitude <- row_df$latitude
   
-  census_results <- cxy_geography(longitude, latitude) %>%
+  #census_results <- cxy_geography(longitude, latitude) %>%
+  
+  census_results <- cxy_geography(-118.044, 34.054) %>%
     select(Census.Tracts.GEOID) %>%
     clean_names()
   
