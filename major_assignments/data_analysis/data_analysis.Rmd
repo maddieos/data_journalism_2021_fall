@@ -51,41 +51,51 @@ census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
 *Are police shootings happening mostly in majority-black communities, even when the victim is not black?
 
 ```{r}
-fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv") 
-filter(!is.na(longitude)) 
-fatal_shootings <- tibble()
+shootings<- read_csv("data/fatal-police-shootings-data.csv") %>%
+  filter(!is.na(longitude)) 
 
-row_number = 1
+shootings_geocoded <- tibble()
 
-for (row_number in 1:nrow(fatal_shootings)) {
+
+
+for (row_number in 1:nrow(shootings_geocoded)) {
 
 #making shooting dataframe one row
   
-row_df<- fatal_shootings %>%
+row_df <- shootings %>%
   slice(row_number)
-   longitude <- row_df$longitude
+
+#making one row dataframe with shooting data geocoded
+  longitude <- row_df$longitude
   latitude <- row_df$latitude
+  
+#get census tract for row
   census_results <- cxy_geography(longitude, latitude) %>%
     select(Census.Tracts.GEOID) %>%
     clean_names()
- 
+  
+  
+ #add census tract to dataframe
    row_df <- row_df %>%
-     bind_cols(census_results) %>%
-  shootings <- fatal_shootings %>%
+     bind_cols(census_results)
+   
+  shootings_geocoded <- shootings_geocoded %>%
     bind_rows(row_df) 
-   
-   print(paste0("finished ", row_number, " ", Sys.time()))
-   
-   if (row_number%%500 == 0) {
-     filepath <- paste0("data/geocoded_results_", row_number, ".rds")
-     write_rds(fatal_shootings, filepath)
-    shootings <- as_tibble()
-     
-   }
      
 }
 
 
+#Census API
+
+```
+```{r}
+v19 <- load_variables(2019, "acs5", cache = TRUE) 
+
+total_pop <- get_acs(geography = "tract",
+              variables = ("B02001_001")
+              
+black_pop <- get_acs(geography = "tract",
+              variables = ("B02001_003")
 ```
 
 ### Question 2
@@ -98,6 +108,8 @@ row_df<- fatal_shootings %>%
 *Are police shootings still happening disproportionately affecting black people regardless of the area (even in white neighborhoods)?
 
 ```{r}
+
+#use census API for demographics
 ```
 
 
