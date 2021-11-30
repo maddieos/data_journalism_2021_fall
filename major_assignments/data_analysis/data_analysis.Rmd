@@ -26,6 +26,13 @@ library(lubridate)
 library(refinr)
 library(tidycensus)
 install.packages("censusxy")
+library(censusxy)
+
+library(janitor)
+library(sf)
+library(tigris)
+install.packages("usmap")
+library(usmap)
 
 ```
 
@@ -35,6 +42,7 @@ install.packages("censusxy")
 # Load required data
 fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv") 
 # Clean required data and prepare for analysis if needed. 
+census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
 ```
 
 
@@ -43,7 +51,39 @@ fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv")
 *Are police shootings happening mostly in majority-black communities, even when the victim is not black?
 
 ```{r}
+fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv") 
+filter(!is.na(longitude)) 
+fatal_shootings <- tibble()
 
+row_number = 1
+
+for (row_number in 1:nrow(fatal_shootings)) {
+
+#making shooting dataframe one row
+  
+row_df<- fatal_shootings %>%
+  slice(row_number)
+   longitude <- row_df$longitude
+  latitude <- row_df$latitude
+  census_results <- cxy_geography(longitude, latitude) %>%
+    select(Census.Tracts.GEOID) %>%
+    clean_names()
+ 
+   row_df <- row_df %>%
+     bind_cols(census_results) %>%
+  shootings <- fatal_shootings %>%
+    bind_rows(row_df) 
+   
+   print(paste0("finished ", row_number, " ", Sys.time()))
+   
+   if (row_number%%500 == 0) {
+     filepath <- paste0("data/geocoded_results_", row_number, ".rds")
+     write_rds(fatal_shootings, filepath)
+    shootings <- as_tibble()
+     
+   }
+     
+}
 
 
 ```
