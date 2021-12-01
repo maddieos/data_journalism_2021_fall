@@ -121,6 +121,7 @@ data27 <- read_rds("data_analysis/data/geocoded_results_6410.rds")
 #binding the ones we have into one
 shootings_geoid <- bind_rows(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13,data14, data15,data16, data17, data18, data19, data20, data21, data22, data23, data24, data25, data26, data27,.id = NULL)
 unmatched <- anti_join(Shootings, shootings_geoid, by=c("id"))
+
 census <- get_acs(geography = "tract", state="MD", 
                        variables = c(popululation = "B02001_001",
                                 median.gross.rent = "B25064_001",
@@ -135,6 +136,7 @@ census <- get_acs(geography = "tract", state="MD",
                                 multiple = "B03002_009",
                                 other = "B03002_008"),
                           year= 2019)
+
 shootings_geoid_tracts%>%
   group_by(census_tracts_geoid)%>%
   summarise()
@@ -145,6 +147,13 @@ shootings_geoid_tracts%>%
 *Do these shootings mostly occur in low income areas? 
 
 ```{r}
+
+census <- get_acs(geography = "tract", state="MD", 
+                       variables = c(popululation = "B02001_001",
+                                median.gross.rent = "B25064_001",
+                                median.household.income = "B19013_001",
+                                poverty.level = "B05010_001",
+                          year= 2019)
 ```
 
 ### Question 3
