@@ -10,7 +10,7 @@ library(censusxy)
 
 
 ## census api key
-census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
+census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", install = "TRUE", overwrite = TRUE)
 
 
 police_shootings <- read_csv("data/fatal-police-shootings-data.csv") %>%
@@ -22,7 +22,9 @@ police_shootings <- read_csv("data/fatal-police-shootings-data.csv") %>%
 
 police_shootings_sf <- tibble()
 
-for (row_number in 1:nrow(police_shootings)) {
+#for (row_number in 1:nrow(police_shootings)) {
+
+for (row_number in 6291:6410) {
   
   #this makes a dataframe for each
   row_df<- police_shootings %>%
@@ -31,29 +33,34 @@ for (row_number in 1:nrow(police_shootings)) {
   #store lat and long values
   longitude <- row_df$longitude
   latitude <- row_df$latitude
+  census_results <- cxy_geography(longitude, latitude) 
   
-  #census_results <- cxy_geography(longitude, latitude) %>%
-  
-  census_results <- cxy_geography(-118.044, 34.054) %>%
-    select(Census.Tracts.GEOID) %>%
-    clean_names()
-  
-  row_df <- row_df %>%
-    bind_cols(census_results) 
-  
-  
-  #inding some rows
-  police_shootings_sf <- police_shootings_sf %>%
-    bind_rows(row_df) 
-  
-  print(paste0("finished ", row_number, " ", Sys.time()))
-  
-  if (row_number%%500 == 0) {
-    filepath <- paste0("data/geocoded_results_", row_number, ".rds")
-    write_rds(police_shootings_sf, filepath)
-    police_shootings_sf <- as_tibble()
+  if (!is.null(census_results)) {
+    
+    census_results <- census_results %>%
+      select(Census.Tracts.GEOID) %>%
+      clean_names()
+    
+    row_df <- row_df %>%
+      bind_cols(census_results) 
+    
+    
+    #binding some rows
+    police_shootings_sf <- police_shootings_sf %>%
+      bind_rows(row_df) 
+    
+    print(paste0("finished ", row_number, " ", Sys.time()))
+    
+    if (row_number%%10 == 0) {
+      filepath <- paste0("data/geocoded_results_", row_number, ".rds")
+      write_rds(police_shootings_sf, filepath)
+      police_shootings_sf <- as_tibble()
+      
+      
+    }
+  } else { 
+    
+    print(paste0("No geocode found", row_number, " ", Sys.time()))
     
   }
-  
-  
 }
