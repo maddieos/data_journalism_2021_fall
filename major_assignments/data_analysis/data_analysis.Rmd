@@ -145,10 +145,13 @@ census <- get_acs(geography = "tract", state=states_dataframe,
                                 other = "B03002_008"),
                           year= 2019)
 
-#shootings_geoid_tracts%>%
-  #group_by(census_tracts_geoid)%>%
-  #summarise()
 
+
+
+
+#shootings_geoid%>%
+  #group_by(census_tracts_geoid) %>%
+  #summarise()
 ```
 
 ### Question 2
@@ -156,7 +159,7 @@ census <- get_acs(geography = "tract", state=states_dataframe,
 
 ```{r}
 
-census <- get_acs(geography = "tract", state="MD", 
+census <- get_acs(geography = "tract", state=states_dataframe, 
                        variables = c(popululation = "B02001_001",
                                 median.gross.rent = "B25064_001",
                                 median.household.income = "B19013_001",
