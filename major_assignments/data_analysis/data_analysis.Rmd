@@ -228,5 +228,55 @@ race_percent<-race%>%
    mutate(percent=(n/total))
 ```
 
+### Question 4
+How do these percentages compare to 
+### Answer 4
 
+```{r}
+#Filtering for only Black shootings
+shootings_geoid_black <- shootings_geoid %>%
+  filter(race =="B")
+
+#Grouping Black shootings by state
+shootings_geoid_black <- shootings_geoid_black %>%
+  group_by(state) %>%
+  summarise(count=n()) %>%
+  arrange(desc(count))
+
+#Total shootings per state
+shootings_states <- shootings_geoid %>%
+  group_by(state) %>%
+  summarise(count=n()) %>%
+  arrange(desc(count)) %>%
+  rename(total_count=count)
+
+#Joining by state
+shootings_total <- shootings_states %>%
+  left_join(shootings_geoid_black, by=c("state"))
+
+#Find percentage
+shootings_total<-shootings_total %>%
+  mutate(percentage_black=(count/total_count)) %>%
+  arrange(desc(percentage_black))
+
+#Getting Census data for population by state
+census_2 <- get_acs(geography = "state", 
+                       variables = c(popululation = "B02001_001",
+                                median.gross.rent = "B25064_001",
+                                median.household.income = "B19013_001",
+                                af.am = "B03002_004"),
+                          year= 2019)
+
+write_rds(census_2,"census_2.rds")
+census_2 <- read_rds("census_2.rds")
+
+census_3 <- census_2 %>%
+  select(-moe) %>%
+  pivot_wider(names_from=variable, values_from=estimate)
+
+census_3 <- census_3 %>%
+  mutate(total_pop_black=(af.am/popululation)) %>%
+  arrange(desc(total_pop_black))
+
+```
 -30-
