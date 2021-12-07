@@ -229,8 +229,9 @@ race_percent<-race%>%
 ```
 
 ### Question 4
-How do these percentages compare to 
+How do these percentages compare to other states.
 ### Answer 4
+In Illinois, the black population accounts for about 14% of the total population, yet in 50% percent of its shootings the victim is Black. 
 
 ```{r}
 #Filtering for only Black shootings
@@ -276,7 +277,17 @@ census_3 <- census_2 %>%
 
 census_3 <- census_3 %>%
   mutate(total_pop_black=(af.am/popululation)) %>%
-  arrange(desc(total_pop_black))
+  arrange(desc(total_pop_black)) %>%
+  rename(state_name=NAME)
 
+fips_codes <- fips_codes %>%
+  select(state,state_name)%>%
+  distinct()
+
+shootings_black_joined <- fips_codes %>%
+  left_join(shootings_total, by=c("state"))%>%
+  left_join(census_3, by=c("state_name")) %>%
+  mutate(difference=(percentage_black-total_pop_black)) %>%
+  arrange(desc(difference))
 ```
 -30-
