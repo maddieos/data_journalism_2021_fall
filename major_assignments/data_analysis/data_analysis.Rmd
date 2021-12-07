@@ -49,6 +49,8 @@ census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
 
 ### Question 1
 *Are police shootings happening mostly in majority-black communities, even when the victim is not black?
+###Answer 1:
+Yes, it is happening more predominatley in black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in black areas.
 
 ```{r}
 Shootings <- read_csv("data/fatal-police-shootings-data.csv")
@@ -57,6 +59,8 @@ census_api_key("2181c12b8e092a4bd036068e6b77a130eb51b099")
 ```
 ###Question 1:
 Are Police shootings primarily only happening in majority Black neighborhoods even when the victim is not black?
+###Answer 1:
+Yes, it is happening more predominatley in black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in black areas.
 
 ```{r eval=FALSE}
 
@@ -145,34 +149,83 @@ census <- get_acs(geography = "tract", state=states_dataframe,
                                 other = "B03002_008"),
                           year= 2019)
 
+write_rds(census,"census.rds")
+census <- read_rds("census.rds")
+
+
+shootings_geoid_grouped <- shootings_geoid%>%
+  group_by(census_tracts_geoid)%>%
+  summarise(count=n())
+
+
+census_1 <- census %>%
+  select(-moe) %>%
+  pivot_wider(names_from=variable, values_from=estimate)
+
+
+census_added<-census_1%>%
+  summarise(total_population = sum(popululation),
+            total_black_population = sum(af.am))%>%
+mutate(percentage_black = (total_black_population/total_population))
+
+
+shootings_geoid_rename<-shootings_geoid_grouped%>%
+  rename(GEOID=census_tracts_geoid)
+
+
+shootings_added <- shootings_geoid_rename %>%
+  left_join(census_1, by=c("GEOID")) 
+
+
+shootings_added %>%
+  summarise(total_black = sum(af.am),
+           total_pop = sum(popululation)) %>%
+  mutate(percentage_black=(total_black/total_pop))
 
 
 
 
-#shootings_geoid%>%
-  #group_by(census_tracts_geoid) %>%
-  #summarise()
 ```
 
 ### Question 2
 *Do these shootings mostly occur in low income areas? 
+###Answer2:
+Yes, shootings are occurring more in low income areas. The mean income in the shooting data is $56,554, where the national mean income is $67,007.
 
 ```{r}
+shootings_income<-shootings_added%>%
+  filter(!is.na(median.household.income)) %>%
+  summarise(mean_income =mean(median.household.income))
 
-census <- get_acs(geography = "tract", state=states_dataframe, 
-                       variables = c(popululation = "B02001_001",
-                                median.gross.rent = "B25064_001",
-                                median.household.income = "B19013_001",
-                                poverty.level = "B05010_001",
-                          year= 2019)
+
+census_income<-census_1%>%
+  filter(!is.na(median.household.income)) %>%
+  summarise(mean_income =mean(median.household.income))
+
 ```
 
 ### Question 3
 *Are police shootings still happening disproportionately affecting black people regardless of the area (even in white neighborhoods)?
+###Answer 3:
+Yes, police shootings are disproportionately effect Black people. The rate they get shot is at 23%, it is almost twice as much as there are Black people in the country at 12%
 
 ```{r}
+options(scipen = 999)
 
-#use census API for demographics
+race_shootings <- shootings_geoid %>%
+  filter(!is.na(race))
+
+race_counted<-race_shootings%>%
+ group_by(race)%>%
+  count(race)
+
+race<-race_counted%>%
+  add_column(total="6410")
+
+race$total <- as.numeric(race$total)
+
+race_percent<-race%>%
+   mutate(percent=(n/total))
 ```
 
 
