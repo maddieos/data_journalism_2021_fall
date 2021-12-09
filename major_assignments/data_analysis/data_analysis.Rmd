@@ -34,156 +34,92 @@ library(tigris)
 install.packages("usmap")
 library(usmap)
 
+census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
+
+
 ```
 
 ## Load and Cleaning Data
 
 ```{r}
-# Load required data
-fatal_shootings<- read_csv("data/fatal-police-shootings-data.csv") 
-# Clean required data and prepare for analysis if needed. 
-census_api_key("0105753aba54d204fb6c33c44044ae59449b3773", overwrite =TRUE)
+# Load geocoded shootings data
+
+fatal_shootings <- read_rds("data/all_geocoded_shootings.rds")
+
+shootings_geoid_grouped <- fatal_shootings %>%
+  group_by(census_tracts_geoid)%>%
+  summarise(count=n())%>%
+  rename(geoid=census_tracts_geoid)
+
+# # Load census data
+# states_dataframe <- fips_codes %>%
+#   distinct(state) %>%
+#   head(51) %>%
+#   as_vector()
+
+# census <- get_acs(geography = "tract", state=states_dataframe, 
+#                        variables = c(popululation = "B02001_001",
+#                                 median.gross.rent = "B25064_001",
+#                                 median.household.income = "B19013_001",
+#                                 rent.burden = "B25071_001",
+#                                 white = "B03002_003", 
+#                                 af.am = "B03002_004",
+#                                 hispanic = "B03002_012",
+#                                 am.ind = "B03002_005",
+#                                 asian = "B03002_006",
+#                                 nh.pi = "B03002_007",
+#                                 multiple = "B03002_009",
+#                                 other = "B03002_008"),
+#                           year= 2019)
+#write_rds(census,"census.rds")
+census <- read_rds("data/census.rds")%>%
+  clean_names()%>%
+  select(-moe) %>%
+  pivot_wider(names_from=variable, values_from=estimate) %>%
+  rename(population = popululation) %>%
+  mutate(percentage_black = (`af.am`/population))
+
+glimpse(census)
+
+shootings_census <- census %>%
+  left_join(shootings_geoid_grouped) %>%
+  mutate(shooting=case_when(
+    is.na(count)~"No",
+    TRUE~"Yes"
+  ))%>%
+  select(-count)
+
+
+
 ```
 
-
-
-### Question 1
-*Are police shootings happening mostly in majority-black communities, even when the victim is not black?
-###Answer 1:
-Yes, it is happening more predominatley in black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in black areas.
-
-```{r}
-Shootings <- read_csv("data/fatal-police-shootings-data.csv")
-
-census_api_key("2181c12b8e092a4bd036068e6b77a130eb51b099")
-```
 ###Question 1:
 Are Police shootings primarily only happening in majority Black neighborhoods even when the victim is not black?
 ###Answer 1:
 Yes, it is happening more predominatley in black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in black areas.
 
-```{r eval=FALSE}
-
-shootings<-read_csv("data/fatal-police-shootings-data.csv")%>%
-    filter(!is.na(longitude)) 
-
-shootings_geocoded <- tibble()
-for (row_number in 1:nrow(shootings)) {
-  
-  #making one row dataframe with shooting data geocoded
-  
-  row_df <- shootings %>%
-    slice(row_number)
-  
-  #extract value for each object latitude and longitude
-  longitude <- row_df$longitude
-  latitude <- row_df$latitude
-  
-  #get census tract for row
-  census_results <- cxy_geography(longitude,latitude) %>%
-    select(Census.Tracts.GEOID) %>%
-    clean_names()
-  
-#add census tract to dataframe 
-   row_df <- row_df %>%
-     bind_cols(census_results) 
-   
-  shootings_geocoded <- shootings_geocoded %>%
-    bind_rows(row_df) 
-}
-```
-
 ```{r}
-#read in the data
-data1 <- read_rds("data/geocoded_results_500.rds")
-data2 <- read_rds("data/geocoded_results_1000.rds")
-data3 <- read_rds("data/geocoded_results_1500.rds")
-data4 <- read_rds("data/geocoded_results_2000.rds")
-data5 <- read_rds("data/geocoded_results_2500.rds")
-data6 <- read_rds("data/geocoded_results_3000.rds")
-data7 <- read_rds("data/geocoded_results_3500.rds")
-data8 <- read_rds("data/geocoded_results_4000.rds")
-data9 <- read_rds("data/geocoded_results_4500.rds")
-data10 <- read_rds("data/geocoded_results_5000.rds")
-data11 <- read_rds("data/geocoded_results_5500.rds")
-data12 <- read_rds("data/geocoded_results_6000.rds")
-data13 <- read_rds("data/geocoded_results_6150.rds")
-data14 <- read_rds("data/geocoded_results_6240.rds")
-data15 <- read_rds("data/geocoded_results_6290.rds")
-data16 <- read_rds("data/geocoded_results_6300.rds")
-data17 <- read_rds("data/geocoded_results_6310.rds")
-data18 <- read_rds("data/geocoded_results_6320.rds")
-data19 <- read_rds("data/geocoded_results_6330.rds")
-data20 <- read_rds("data/geocoded_results_6340.rds")
-data21 <- read_rds("data/geocoded_results_6350.rds")
-data22 <- read_rds("data/geocoded_results_6360.rds")
-data23 <- read_rds("data/geocoded_results_6370.rds")
-data24 <- read_rds("data/geocoded_results_6380.rds")
-data25 <- read_rds("data/geocoded_results_6390.rds")
-data26 <- read_rds("data/geocoded_results_6400.rds")
-data27 <- read_rds("data/geocoded_results_6410.rds")
 
-#binding the ones we have into one
-shootings_geoid <- bind_rows(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11, data12, data13,data14, data15,data16, data17, data18, data19, data20, data21, data22, data23, data24, data25, data26, data27,.id = NULL)
-unmatched <- anti_join(shootings, shootings_geoid, by=c("id"))
-
-states_dataframe <- fips_codes %>%
-  distinct(state) %>%
-  head(51) %>%
-  as_vector()
-
-#census <- get_acs(geography = "tract", state=states_dataframe, variables = c(population = "B02001_001"), geometry = FALSE)
-
-census <- get_acs(geography = "tract", state=states_dataframe, 
-                       variables = c(popululation = "B02001_001",
-                                median.gross.rent = "B25064_001",
-                                median.household.income = "B19013_001",
-                                rent.burden = "B25071_001",
-                                white = "B03002_003", 
-                                af.am = "B03002_004",
-                                hispanic = "B03002_012",
-                                am.ind = "B03002_005",
-                                asian = "B03002_006",
-                                nh.pi = "B03002_007",
-                                multiple = "B03002_009",
-                                other = "B03002_008"),
-                          year= 2019)
-
-write_rds(census,"census.rds")
-census <- read_rds("census.rds")
-
-
-shootings_geoid_grouped <- shootings_geoid%>%
-  group_by(census_tracts_geoid)%>%
-  summarise(count=n())
-
-
-census_1 <- census %>%
-  select(-moe) %>%
-  pivot_wider(names_from=variable, values_from=estimate)
-
-
-census_added<-census_1%>%
-  summarise(total_population = sum(popululation),
-            total_black_population = sum(af.am))%>%
-mutate(percentage_black = (total_black_population/total_population))
-
-
-shootings_geoid_rename<-shootings_geoid_grouped%>%
-  rename(GEOID=census_tracts_geoid)
-
-
-shootings_added <- shootings_geoid_rename %>%
-  left_join(census_1, by=c("GEOID")) 
-
-
-shootings_added %>%
+shootings_census %>%
+  filter(shooting=="Yes") %>%
   summarise(total_black = sum(af.am),
-           total_pop = sum(popululation)) %>%
+           total_pop = sum(population)) %>%
   mutate(percentage_black=(total_black/total_pop))
 
 
+shootings_census %>%
+  summarise(total_black = sum(af.am),
+           total_pop = sum(population)) %>%
+  mutate(percentage_black=(total_black/total_pop))
 
+
+#By Census tract
+
+sc <- shootings_census %>%
+  filter(shooting=="Yes") %>%
+  filter(percentage_black >= .5) %>%
+  arrange(desc(percentage_black))
+  
 
 ```
 
@@ -201,6 +137,27 @@ shootings_income<-shootings_added%>%
 census_income<-census_1%>%
   filter(!is.na(median.household.income)) %>%
   summarise(mean_income =mean(median.household.income))
+
+
+#Mean Income per State
+
+mean_income <- get_acs(geography = "state", 
+                       variables = c(median.household.income = "B19013_001"),
+                          year= 2019)
+
+mean_income <- mean_income %>%
+  rename(state_name=NAME)
+
+fips_codes <- fips_codes %>%
+  select(state,state_name)%>%
+  distinct()
+
+
+mean_income <- fips_codes %>%
+  left_join(mean_income, by=c("state_name")) %>%
+  left_join(shootings_states, by=c("state"))
+
+#State Poverty Level
 
 ```
 
@@ -289,5 +246,14 @@ shootings_black_joined <- fips_codes %>%
   left_join(census_3, by=c("state_name")) %>%
   mutate(difference=(percentage_black-total_pop_black)) %>%
   arrange(desc(difference))
+
+
+#Illinois
+
+race_shootings %>%
+  group_by(city)%>%
+  filter(state=="IL")
+  
+
 ```
 -30-
