@@ -96,7 +96,7 @@ shootings_census <- census %>%
 ###Question 1:
 Are Police shootings primarily only happening in majority Black neighborhoods even when the victim is not black?
 ###Answer 1:
-Yes, it is happening more predominatley in black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in black areas.
+Yes, it is happening more predominately in Black neighborhoods, the percentage overall in the US for the black population is 12%, and the shooting data showed it as 14% in Black areas.
 
 ```{r}
 
@@ -129,47 +129,32 @@ sc <- shootings_census %>%
 Yes, shootings are occurring more in low income areas. The mean income in the shooting data is $56,554, where the national mean income is $67,007.
 
 ```{r}
-shootings_income<-shootings_added%>%
+#Aggregate
+shootings_income<-shootings_census%>%
   filter(!is.na(median.household.income)) %>%
   summarise(mean_income =mean(median.household.income))
 
 
-census_income<-census_1%>%
+census_income<-census%>%
   filter(!is.na(median.household.income)) %>%
   summarise(mean_income =mean(median.household.income))
 
 
-#Mean Income per State
-
-mean_income <- get_acs(geography = "state", 
-                       variables = c(median.household.income = "B19013_001"),
-                          year= 2019)
-
-mean_income <- mean_income %>%
-  rename(state_name=NAME)
-
-fips_codes <- fips_codes %>%
-  select(state,state_name)%>%
-  distinct()
 
 
-mean_income <- fips_codes %>%
-  left_join(mean_income, by=c("state_name")) %>%
-  left_join(shootings_states, by=c("state"))
-
-#State Poverty Level
 
 ```
 
 ### Question 3
 *Are police shootings still happening disproportionately affecting black people regardless of the area (even in white neighborhoods)?
 ###Answer 3:
-Yes, police shootings are disproportionately effect Black people. The rate they get shot is at 23%, it is almost twice as much as there are Black people in the country at 12%
+Yes, police shootings are disproportionately affecting Black people. They account for 23% of police shootings, even though they account for 12% of the country's entire population. 
+
 
 ```{r}
 options(scipen = 999)
 
-race_shootings <- shootings_geoid %>%
+race_shootings <- shootings_census %>%
   filter(!is.na(race))
 
 race_counted<-race_shootings%>%
@@ -188,11 +173,11 @@ race_percent<-race%>%
 ### Question 4
 How do these percentages compare to other states.
 ### Answer 4
-In Illinois, the black population accounts for about 14% of the total population, yet in 50% percent of its shootings the victim is Black. 
+In Illinois, the Black population accounts for about 14% of the total population, yet in 50% percent of its shootings the victim is Black. 
 
 ```{r}
 #Filtering for only Black shootings
-shootings_geoid_black <- shootings_geoid %>%
+shootings_geoid_black <- shootings_census %>%
   filter(race =="B")
 
 #Grouping Black shootings by state
@@ -202,7 +187,7 @@ shootings_geoid_black <- shootings_geoid_black %>%
   arrange(desc(count))
 
 #Total shootings per state
-shootings_states <- shootings_geoid %>%
+shootings_states <- shootings_census %>%
   group_by(state) %>%
   summarise(count=n()) %>%
   arrange(desc(count)) %>%
